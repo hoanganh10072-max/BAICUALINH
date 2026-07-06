@@ -1,0 +1,42 @@
+﻿@model System.Collections.Generic.List<WEBLINH.Models.SanPham>
+@{
+    ViewBag.Title = ViewBag.TenDM ?? "Tất cả sản phẩm";
+    var dsDM = ViewBag.DanhMuc as System.Collections.Generic.List<WEBLINH.Models.DanhMuc>;
+    int? maDMHT = ViewBag.MaDMHienTai as int?;
+}
+
+<div class="row">
+    <aside class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-header bg-warning fw-bold">Danh mục</div>
+            <ul class="list-group list-group-flush">
+                <a href="@Url.Action("DanhSach", "SanPham", new { area = "User" })"
+                   class="list-group-item @(maDMHT == null ? "active" : "")">Tất cả</a>
+                @if (dsDM != null)
+                {
+                    foreach (var dm in dsDM)
+                    {
+                        <a href="@Url.Action("DanhSach", "SanPham", new { area = "User", maDM = dm.MaDM })"
+                           class="list-group-item @(maDMHT == dm.MaDM ? "active" : "")">@dm.TenDM</a>
+                    }
+                }
+            </ul>
+        </div>
+    </aside>
+    <div class="col-md-9">
+        <h4>@ViewBag.Title <small class="text-muted">(@Model.Count sản phẩm)</small></h4>
+        <hr />
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info">Không có sản phẩm nào.</div>
+        }
+        <div class="row g-3">
+            @foreach (var sp in Model)
+            {
+                <div class="col-md-4 col-6">
+                    @Html.Partial("_ProductCard", sp)
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,3 @@
+Đặt ảnh placeholder tên "no-image.png" tại đây (kích thước ~300x300).
+Đây là file placeholder - hãy thay bằng file ảnh thật.
+Bạn có thể tải free tại: https://placehold.co/300x300?text=No+Image

@@ -1,0 +1,50 @@
+﻿@{ ViewBag.Title = "Dashboard"; }
+
+<div class="row g-3">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h6>Tổng đơn hàng</h6>
+                <h2>@ViewBag.SoDonHang</h2>
+                <i class="fa fa-file-invoice" style="font-size:32px;opacity:.3"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h6>Sản phẩm</h6>
+                <h2>@ViewBag.SoSanPham</h2>
+                <i class="fa fa-box" style="font-size:32px;opacity:.3"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h6>Khách hàng</h6>
+                <h2>@ViewBag.SoNguoiDung</h2>
+                <i class="fa fa-users" style="font-size:32px;opacity:.3"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-danger">
+            <div class="card-body">
+                <h6>Doanh thu</h6>
+                <h4>@(((decimal)ViewBag.DoanhThu).ToString("N0")) đ</h4>
+                <i class="fa fa-dollar-sign" style="font-size:32px;opacity:.3"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h5>Chào mừng đến với trang quản trị WEBLINH Baby Shop</h5>
+            <p>Sử dụng menu bên trái để quản lý danh mục, sản phẩm và đơn hàng.</p>
+            <p class="text-muted small">Chỉ đơn hàng có trạng thái <b>Hoàn thành</b> mới được tính vào doanh thu.</p>
+        </div>
+    </div>
+</div>

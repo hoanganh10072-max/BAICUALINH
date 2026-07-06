@@ -1,0 +1,63 @@
+﻿@model WEBLINH.Models.SanPham
+@{
+    ViewBag.Title = "Sửa sản phẩm";
+    var dsDM = ViewBag.DanhMuc as System.Collections.Generic.List<WEBLINH.Models.DanhMuc>;
+}
+
+<h4>Cập nhật sản phẩm #@Model.MaSP</h4>
+<div class="card">
+    <div class="card-body">
+        @using (Html.BeginForm("Edit", "SanPham", new { area = "Admin" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.MaSP)
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.TenSP, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.TenSP, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.TenSP, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.MaDM, new { @class = "form-label" })
+                        @Html.DropDownListFor(m => m.MaDM,
+                            new SelectList(dsDM, "MaDM", "TenDM"),
+                            "-- Chọn danh mục --",
+                            new { @class = "form-select" })
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            @Html.LabelFor(m => m.Gia, new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.Gia, new { @class = "form-control", type = "number" })
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            @Html.LabelFor(m => m.SoLuong, new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.SoLuong, new { @class = "form-control", type = "number" })
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.MoTa, new { @class = "form-label" })
+                        @Html.TextAreaFor(m => m.MoTa, new { @class = "form-control", rows = 5 })
+                    </div>
+                    <div class="form-check mb-3">
+                        @Html.CheckBoxFor(m => m.NoiBat, new { @class = "form-check-input" })
+                        @Html.LabelFor(m => m.NoiBat, new { @class = "form-check-label" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Ảnh hiện tại</label>
+                    <div class="mb-2">
+                        <img src="@Url.Content("~/Content/uploads/" + (string.IsNullOrEmpty(Model.Anh) ? "no-image.png" : Model.Anh))"
+                             class="img-fluid rounded" />
+                    </div>
+                    <label class="form-label">Đổi ảnh mới</label>
+                    <input type="file" name="FileAnh" class="form-control" accept="image/*" />
+                    <small class="text-muted">Bỏ trống nếu không đổi.</small>
+                </div>
+            </div>
+            <hr />
+            <button class="btn btn-warning">Cập nhật</button>
+            <a href="@Url.Action("Index")" class="btn btn-secondary">Hủy</a>
+        }
+    </div>
+</div>

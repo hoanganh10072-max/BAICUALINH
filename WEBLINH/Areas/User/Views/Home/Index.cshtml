@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Trang chủ";
+    var noiBat = ViewBag.NoiBat as System.Collections.Generic.List<WEBLINH.Models.SanPham>;
+    var moiNhat = ViewBag.MoiNhat as System.Collections.Generic.List<WEBLINH.Models.SanPham>;
+    var danhMuc = ViewBag.DanhMuc as System.Collections.Generic.List<WEBLINH.Models.DanhMuc>;
+}
+
+<!-- Banner -->
+<div class="banner bg-pink-light rounded p-5 mb-4 text-center">
+    <h1 class="fw-bold">Chào mừng đến với WEBLINH Baby Shop</h1>
+    <p class="lead">Quần áo trẻ sơ sinh chất lượng - An toàn - Giá tốt nhất</p>
+    <a href="@Url.Action("DanhSach", "SanPham", new { area = "User" })" class="btn btn-warning btn-lg">
+        Mua sắm ngay <i class="fa fa-arrow-right"></i>
+    </a>
+</div>
+
+<!-- Danh muc -->
+<h4 class="mb-3">Danh mục sản phẩm</h4>
+<div class="row g-3 mb-5">
+    @if (danhMuc != null)
+    {
+        foreach (var dm in danhMuc)
+        {
+            <div class="col-md-2 col-6">
+                <a href="@Url.Action("DanhSach", "SanPham", new { area = "User", maDM = dm.MaDM })"
+                   class="btn btn-outline-primary w-100 py-3">
+                    <i class="fa fa-tags"></i><br />
+                    @dm.TenDM
+                </a>
+            </div>
+        }
+    }
+</div>
+
+<!-- San pham noi bat -->
+<h4 class="mb-3">🔥 Sản phẩm nổi bật</h4>
+<div class="row g-3 mb-5">
+    @if (noiBat != null)
+    {
+        foreach (var sp in noiBat)
+        {
+            <div class="col-md-3 col-6">
+                @Html.Partial("_ProductCard", sp)
+            </div>
+        }
+    }
+</div>
+
+<!-- San pham moi -->
+<h4 class="mb-3">🆕 Sản phẩm mới nhất</h4>
+<div class="row g-3">
+    @if (moiNhat != null)
+    {
+        foreach (var sp in moiNhat)
+        {
+            <div class="col-md-3 col-6">
+                @Html.Partial("_ProductCard", sp)
+            </div>
+        }
+    }
+</div>

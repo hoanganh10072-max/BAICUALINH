@@ -1,0 +1,60 @@
+﻿@model WEBLINH.Models.SanPham
+@{
+    ViewBag.Title = "Thêm sản phẩm";
+    var dsDM = ViewBag.DanhMuc as System.Collections.Generic.List<WEBLINH.Models.DanhMuc>;
+}
+
+<h4>Thêm sản phẩm mới</h4>
+<div class="card">
+    <div class="card-body">
+        @using (Html.BeginForm("Create", "SanPham", new { area = "Admin" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.TenSP, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.TenSP, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.TenSP, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.MaDM, new { @class = "form-label" })
+                        @Html.DropDownListFor(m => m.MaDM,
+                            new SelectList(dsDM, "MaDM", "TenDM"),
+                            "-- Chọn danh mục --",
+                            new { @class = "form-select" })
+                        @Html.ValidationMessageFor(m => m.MaDM, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            @Html.LabelFor(m => m.Gia, new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.Gia, new { @class = "form-control", type = "number" })
+                            @Html.ValidationMessageFor(m => m.Gia, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            @Html.LabelFor(m => m.SoLuong, new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.SoLuong, new { @class = "form-control", type = "number" })
+                            @Html.ValidationMessageFor(m => m.SoLuong, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.MoTa, new { @class = "form-label" })
+                        @Html.TextAreaFor(m => m.MoTa, new { @class = "form-control", rows = 5 })
+                    </div>
+                    <div class="form-check mb-3">
+                        @Html.CheckBoxFor(m => m.NoiBat, new { @class = "form-check-input" })
+                        @Html.LabelFor(m => m.NoiBat, new { @class = "form-check-label" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Ảnh sản phẩm</label>
+                    <input type="file" name="FileAnh" class="form-control" accept="image/*" />
+                    <small class="text-muted">Ảnh sẽ được lưu vào Content/uploads/</small>
+                </div>
+            </div>
+            <hr />
+            <button class="btn btn-warning">Lưu sản phẩm</button>
+            <a href="@Url.Action("Index")" class="btn btn-secondary">Hủy</a>
+        }
+    </div>
+</div>

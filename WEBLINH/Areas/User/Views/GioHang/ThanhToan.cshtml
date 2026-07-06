@@ -1,0 +1,63 @@
+﻿@model WEBLINH.Models.DonHang
+@{
+    ViewBag.Title = "Thanh toán";
+    var cart = ViewBag.Cart as System.Collections.Generic.List<WEBLINH.Models.CartItem>;
+    decimal tongTien = (decimal)ViewBag.TongTien;
+}
+
+<h2><i class="fa fa-credit-card"></i> Thanh toán đơn hàng</h2>
+<hr />
+<div class="row g-4">
+    <div class="col-md-7">
+        @using (Html.BeginForm("ThanhToan", "GioHang", new { area = "User" }, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="card">
+                <div class="card-header bg-warning fw-bold">Thông tin giao hàng</div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.HoTenNhan, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.HoTenNhan, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.HoTenNhan, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.SDTNhan, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.SDTNhan, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.SDTNhan, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.DiaChiGiao, new { @class = "form-label" })
+                        @Html.TextAreaFor(m => m.DiaChiGiao, new { @class = "form-control", rows = 2 })
+                        @Html.ValidationMessageFor(m => m.DiaChiGiao, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.GhiChu, new { @class = "form-label" })
+                        @Html.TextAreaFor(m => m.GhiChu, new { @class = "form-control", rows = 2 })
+                    </div>
+                    <button type="submit" class="btn btn-warning btn-lg w-100">
+                        <i class="fa fa-check"></i> Đặt hàng ngay
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header bg-light fw-bold">Đơn hàng của bạn</div>
+            <div class="card-body">
+                @foreach (var item in cart)
+                {
+                    <div class="d-flex justify-content-between border-bottom py-2">
+                        <span>@item.TenSP <small class="text-muted">x@(item.SoLuong)</small></span>
+                        <span>@item.ThanhTien.ToString("N0") đ</span>
+                    </div>
+                }
+                <div class="d-flex justify-content-between mt-3 fs-5">
+                    <b>Tổng cộng:</b>
+                    <b class="text-danger">@tongTien.ToString("N0") đ</b>
+                </div>
+                <div class="text-muted small mt-2">Thanh toán khi nhận hàng (COD)</div>
+            </div>
+        </div>
+    </div>
+</div>

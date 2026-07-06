@@ -1,0 +1,45 @@
+﻿@model System.Collections.Generic.List<WEBLINH.Models.DonHang>
+@{ ViewBag.Title = "Quản lý đơn hàng"; }
+
+<h4>Danh sách đơn hàng (@Model.Count)</h4>
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Mã đơn</th>
+                        <th>Ngày đặt</th>
+                        <th>Khách hàng</th>
+                        <th>SĐT</th>
+                        <th>Địa chỉ</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var dh in Model)
+                    {
+                        <tr>
+                            <td>#@dh.MaDH</td>
+                            <td>@dh.NgayDat.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@dh.HoTenNhan</td>
+                            <td>@dh.SDTNhan</td>
+                            <td>@dh.DiaChiGiao</td>
+                            <td class="text-danger fw-bold">@dh.TongTien.ToString("N0")</td>
+                            <td><span class="badge bg-info">@dh.TrangThai</span></td>
+                            <td>
+                                <a href="@Url.Action("Detail", new { id = dh.MaDH })" class="btn btn-sm btn-primary">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a href="@Url.Action("Delete", new { id = dh.MaDH })" class="btn btn-sm btn-danger"
+                                   onclick="return confirm('Xóa đơn hàng?');"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+﻿@model WEBLINH.Models.SanPham
+<div class="card product-card h-100 shadow-sm">
+    <a href="@Url.Action("ChiTiet", "SanPham", new { area = "User", id = Model.MaSP })">
+        <img src="@(string.IsNullOrEmpty(Model.Anh) ? Url.Content("~/Content/uploads/no-image.png") : Url.Content("~/Content/uploads/" + Model.Anh))"
+             class="card-img-top" alt="@Model.TenSP" />
+    </a>
+    <div class="card-body d-flex flex-column">
+        <h6 class="card-title">
+            <a href="@Url.Action("ChiTiet", "SanPham", new { area = "User", id = Model.MaSP })" class="text-decoration-none text-dark">
+                @Model.TenSP
+            </a>
+        </h6>
+        <div class="mt-auto">
+            <div class="text-danger fw-bold fs-5 mb-2">@Model.Gia.ToString("N0") đ</div>
+            <a href="@Url.Action("Them", "GioHang", new { area = "User", id = Model.MaSP })"
+               class="btn btn-warning btn-sm w-100">
+                <i class="fa fa-cart-plus"></i> Thêm giỏ
+            </a>
+        </div>
+    </div>
+</div>

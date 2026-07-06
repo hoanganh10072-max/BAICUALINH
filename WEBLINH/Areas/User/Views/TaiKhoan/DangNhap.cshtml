@@ -1,0 +1,34 @@
+﻿@{ ViewBag.Title = "Đăng nhập"; }
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-warning text-center"><h4 class="mb-0">Đăng nhập</h4></div>
+            <div class="card-body">
+                @if (ViewBag.Loi != null)
+                {
+                    <div class="alert alert-danger">@ViewBag.Loi</div>
+                }
+                @using (Html.BeginForm("DangNhap", "TaiKhoan", new { area = "User" }, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+                    <div class="mb-3">
+                        <label class="form-label">Tên đăng nhập</label>
+                        <input name="tenDN" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mật khẩu</label>
+                        <input name="matKhau" type="password" class="form-control" required />
+                    </div>
+                    <button class="btn btn-warning w-100">Đăng nhập</button>
+                }
+                <hr />
+                <div class="text-center">
+                    Chưa có tài khoản?
+                    <a href="@Url.Action("DangKy", "TaiKhoan", new { area = "User" })">Đăng ký ngay</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

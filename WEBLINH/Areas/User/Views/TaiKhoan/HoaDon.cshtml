@@ -1,0 +1,246 @@
+﻿@model WEBLINH.Models.DonHang
+@{
+    Layout = null;
+    ViewBag.Title = "Hóa đơn #" + Model.MaDH;
+    var kh = ViewBag.KhachHang as WEBLINH.Models.NguoiDung;
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <title>Hóa đơn #@Model.MaDH - WEBLINH</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body { background: #f4f6f9; font-family: 'Segoe UI', sans-serif; }
+        .invoice-box {
+            max-width: 850px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,.08);
+            border-radius: 8px;
+        }
+        .invoice-header {
+            border-bottom: 3px solid #f48fb1;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .shop-name {
+            color: #e91e63;
+            font-weight: 700;
+            font-size: 32px;
+            letter-spacing: 1px;
+        }
+        .invoice-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 30px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #333;
+        }
+        .invoice-meta { font-size: 14px; }
+        .invoice-meta td { padding: 5px 0; }
+        table.items { border-collapse: collapse; width: 100%; }
+        table.items th, table.items td {
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            text-align: center;
+        }
+        table.items th {
+            background: #fce4ec;
+            font-weight: 600;
+        }
+        table.items td.text-left { text-align: left; }
+        .total-row {
+            background: #fff3e0;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .signature {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 60px;
+            text-align: center;
+        }
+        .stamp {
+            border: 2px dashed #4caf50;
+            color: #4caf50;
+            transform: rotate(-15deg);
+            padding: 8px 20px;
+            font-weight: 700;
+            display: inline-block;
+            font-size: 18px;
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #888;
+            font-size: 13px;
+        }
+        @@media print {
+            body { background: #fff; }
+            .no-print { display: none !important; }
+            .invoice-box { box-shadow: none; margin: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-box">
+        <!-- Actions -->
+        <div class="no-print mb-3 d-flex justify-content-between">
+            <a href="@Url.Action("DonHangCuaToi", "TaiKhoan", new { area = "User" })" class="btn btn-outline-secondary">
+                <i class="fa fa-arrow-left"></i> Quay lại
+            </a>
+            <div>
+                <button class="btn btn-primary" onclick="window.print()">
+                    <i class="fa fa-print"></i> In hóa đơn
+                </button>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="invoice-header d-flex justify-content-between align-items-center">
+            <div>
+                <div class="shop-name">WEB<span class="text-warning">LINH</span> BABY SHOP</div>
+                <div class="small text-muted">
+                    <i class="fa fa-map-marker-alt"></i> Số 1, Đường ABC, Hà Nội<br />
+                    <i class="fa fa-phone"></i> 0900 000 000 &nbsp;|&nbsp;
+                    <i class="fa fa-envelope"></i> weblinh@babyshop.com
+                </div>
+            </div>
+            <div class="text-end">
+                <div class="fw-bold text-uppercase text-danger">Mã đơn</div>
+                <div class="fs-3 fw-bold">#@Model.MaDH</div>
+            </div>
+        </div>
+
+        <div class="invoice-title">Hóa đơn bán hàng</div>
+
+        <!-- Meta -->
+        <div class="row invoice-meta">
+            <div class="col-6">
+                <b>Khách hàng:</b>
+                <table>
+                    <tr><td style="width:120px;">Họ tên:</td><td><b>@Model.HoTenNhan</b></td></tr>
+                    <tr><td>SĐT:</td><td>@Model.SDTNhan</td></tr>
+                    <tr><td>Địa chỉ:</td><td>@Model.DiaChiGiao</td></tr>
+                    @if (kh != null && !string.IsNullOrEmpty(kh.Email))
+                    {
+                        <tr><td>Email:</td><td>@kh.Email</td></tr>
+                    }
+                </table>
+            </div>
+            <div class="col-6 text-end">
+                <table class="ms-auto">
+                    <tr><td class="pe-3">Ngày lập:</td><td><b>@Model.NgayDat.ToString("dd/MM/yyyy HH:mm")</b></td></tr>
+                    <tr><td class="pe-3">Hình thức:</td><td>Chuyển khoản QR</td></tr>
+                    <tr><td class="pe-3">Trạng thái:</td><td><span class="badge bg-success">@Model.TrangThai</span></td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Items -->
+        <div class="mt-4">
+            <table class="items">
+                <thead>
+                    <tr>
+                        <th style="width:50px;">STT</th>
+                        <th class="text-start">Tên sản phẩm</th>
+                        <th style="width:80px;">SL</th>
+                        <th style="width:140px;">Đơn giá</th>
+                        <th style="width:160px;">Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int stt = 1; }
+                    @foreach (var ct in Model.ChiTiet)
+                    {
+                        <tr>
+                            <td>@(stt++)</td>
+                            <td class="text-left">@ct.TenSP</td>
+                            <td>@ct.SoLuong</td>
+                            <td class="text-end">@ct.DonGia.ToString("N0")</td>
+                            <td class="text-end">@ct.ThanhTien.ToString("N0")</td>
+                        </tr>
+                    }
+                    <tr class="total-row">
+                        <td colspan="4" class="text-end">TỔNG CỘNG:</td>
+                        <td class="text-end text-danger">@Model.TongTien.ToString("N0") đ</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-muted small mt-2">
+                <i>Bằng chữ:</i> <b>@ToVietnameseWords(Model.TongTien)</b>
+            </div>
+        </div>
+
+        <!-- Signature -->
+        <div class="signature">
+            <div>
+                <div class="fw-bold">Khách hàng</div>
+                <div class="small text-muted">(Ký, ghi rõ họ tên)</div>
+                <div style="height:60px;"></div>
+                <div>@Model.HoTenNhan</div>
+            </div>
+            <div>
+                <div class="stamp">ĐÃ THANH TOÁN</div>
+                <div style="height:40px;"></div>
+            </div>
+            <div>
+                <div class="fw-bold">Người bán</div>
+                <div class="small text-muted">(Ký, đóng dấu)</div>
+                <div style="height:60px;"></div>
+                <div>WEBLINH Baby Shop</div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            Cảm ơn quý khách đã mua sắm tại WEBLINH Baby Shop!<br />
+            Hóa đơn được lập tự động từ hệ thống, có giá trị pháp lý tương đương phiếu bán hàng.
+        </div>
+    </div>
+</body>
+</html>
+
+@functions {
+    // Chuyen so tien thanh chu tieng Viet don gian
+    public string ToVietnameseWords(decimal money)
+    {
+        long n = (long)money;
+        if (n == 0) return "Không đồng";
+        string[] units = { "", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín" };
+        string[] scales = { "", "nghìn", "triệu", "tỷ" };
+        string result = "";
+        int scale = 0;
+        while (n > 0)
+        {
+            int block = (int)(n % 1000);
+            if (block > 0)
+            {
+                string blockText = ReadBlock(block, units);
+                result = blockText + " " + scales[scale] + " " + result;
+            }
+            n /= 1000;
+            scale++;
+        }
+        result = result.Trim();
+        return char.ToUpper(result[0]) + result.Substring(1) + " đồng";
+    }
+
+    string ReadBlock(int n, string[] units)
+    {
+        int tr = n / 100, ch = (n / 10) % 10, dv = n % 10;
+        string s = "";
+        if (tr > 0) s += units[tr] + " trăm ";
+        if (ch > 1) { s += units[ch] + " mươi "; if (dv > 0) s += (dv == 1 ? "mốt" : units[dv]); }
+        else if (ch == 1) { s += "mười "; if (dv > 0) s += (dv == 5 ? "lăm" : units[dv]); }
+        else if (ch == 0 && dv > 0 && tr > 0) s += "lẻ " + units[dv];
+        else if (dv > 0) s += units[dv];
+        return s.Trim();
+    }
+}

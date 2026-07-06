@@ -1,0 +1,62 @@
+@model System.Collections.Generic.List<WEBLINH.Models.Menu>
+@{ ViewBag.Title = "Quản lý menu"; }
+
+<div class="d-flex justify-content-between mb-3">
+    <h4>Danh sách menu điều hướng</h4>
+    <a href="@Url.Action("Create", "Menu", new { area = "Admin" })" class="btn btn-warning">
+        <i class="fa fa-plus"></i> Thêm menu
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th style="width:60px;">Mã</th>
+                    <th>Tên menu</th>
+                    <th>Đường dẫn</th>
+                    <th style="width:90px;">Thứ tự</th>
+                    <th style="width:100px;">Hiển thị</th>
+                    <th style="width:150px;">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count == 0)
+                {
+                    <tr><td colspan="6" class="text-center text-muted py-3">Chưa có menu nào.</td></tr>
+                }
+                @foreach (var m in Model)
+                {
+                    <tr>
+                        <td>@m.MaMenu</td>
+                        <td><b>@m.TenMenu</b></td>
+                        <td><code>@m.Url</code></td>
+                        <td>@m.ThuTu</td>
+                        <td>
+                            @if (m.HienThi)
+                            {
+                                <span class="badge bg-success">Hiện</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Ẩn</span>
+                            }
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = m.MaMenu })" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                            <a href="@Url.Action("Delete", new { id = m.MaMenu })" class="btn btn-sm btn-danger"
+                               onclick="return confirm('Xác nhận xóa menu này?');"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="alert alert-info mt-3 small">
+    <b>Gợi ý:</b> Trường <b>Đường dẫn</b> nhập URL bắt đầu bằng dấu <code>/</code>.
+    Ví dụ: <code>/</code> (trang chủ), <code>/User/SanPham/DanhSach</code>, <code>/User/Home/LienHe</code>.
+    <br /><b>Thứ tự</b> nhỏ hơn sẽ hiển thị bên trái trước.
+</div>

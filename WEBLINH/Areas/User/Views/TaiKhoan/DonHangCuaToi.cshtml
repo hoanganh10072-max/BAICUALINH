@@ -1,0 +1,74 @@
+﻿@model System.Collections.Generic.List<WEBLINH.Models.DonHang>
+@{
+    ViewBag.Title = "Đơn hàng của tôi";
+
+    Func<string, string> badgeClass = t => {
+        switch (t)
+        {
+            case "Chờ thanh toán": return "bg-warning text-dark";
+            case "Đã chuyển khoản": return "bg-info text-dark";
+            case "Đã xác nhận":    return "bg-primary";
+            case "Đang giao":      return "bg-secondary";
+            case "Hoàn thành":     return "bg-success";
+            case "Đã hủy":         return "bg-danger";
+            default:               return "bg-light text-dark";
+        }
+    };
+    var choPhepHoaDon = new[] { "Đã xác nhận", "Đang giao", "Hoàn thành" };
+}
+
+<h2>Đơn hàng của tôi</h2>
+<hr />
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Bạn chưa có đơn hàng nào.</div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Mã đơn</th>
+                    <th>Ngày đặt</th>
+                    <th>Người nhận</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th style="width:230px;">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var dh in Model)
+                {
+                    <tr>
+                        <td><b>#@dh.MaDH</b></td>
+                        <td>@dh.NgayDat.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@dh.HoTenNhan</td>
+                        <td class="text-danger fw-bold">@dh.TongTien.ToString("N0") đ</td>
+                        <td><span class="badge @badgeClass(dh.TrangThai)">@dh.TrangThai</span></td>
+                        <td>
+                            <a href="@Url.Action("ChiTietDonHang", "TaiKhoan", new { area = "User", id = dh.MaDH })"
+                               class="btn btn-sm btn-outline-primary">
+                                <i class="fa fa-eye"></i> Chi tiết
+                            </a>
+                            @if (dh.TrangThai == "Chờ thanh toán")
+                            {
+                                <a href="@Url.Action("QRThanhToan", "GioHang", new { area = "User", id = dh.MaDH })"
+                                   class="btn btn-sm btn-warning">
+                                    <i class="fa fa-qrcode"></i> Thanh toán
+                                </a>
+                            }
+                            else if (System.Array.IndexOf(choPhepHoaDon, dh.TrangThai) >= 0)
+                            {
+                                <a href="@Url.Action("HoaDon", "TaiKhoan", new { area = "User", id = dh.MaDH })"
+                                   class="btn btn-sm btn-success" target="_blank">
+                                    <i class="fa fa-file-invoice"></i> Hóa đơn
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

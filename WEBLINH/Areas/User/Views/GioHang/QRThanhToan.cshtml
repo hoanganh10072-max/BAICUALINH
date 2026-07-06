@@ -1,0 +1,138 @@
+﻿@model WEBLINH.Models.DonHang
+@{ ViewBag.Title = "Thanh toán QR - Đơn hàng #" + Model.MaDH; }
+
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <div class="alert alert-success">
+            <i class="fa fa-check-circle"></i>
+            Đơn hàng <b>#@Model.MaDH</b> đã được tạo. Vui lòng thanh toán bằng cách quét mã QR bên dưới.
+        </div>
+
+        <div class="row g-4">
+            <!-- QR CODE -->
+            <div class="col-md-6">
+                <div class="card shadow-sm text-center">
+                    <div class="card-header bg-warning fw-bold">
+                        <i class="fa fa-qrcode"></i> Quét mã để thanh toán
+                    </div>
+                    <div class="card-body">
+                        <img src="@ViewBag.QRUrl" class="img-fluid" style="max-width:320px;" alt="VietQR" />
+                        <p class="text-muted small mt-3">
+                            Mở app ngân hàng bất kỳ, chọn <b>Quét QR</b>, thông tin đã điền sẵn.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INFO -->
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light fw-bold">Thông tin chuyển khoản</div>
+                    <div class="card-body">
+                        <table class="table table-borderless mb-0">
+                            <tr>
+                                <td>Ngân hàng:</td>
+                                <td class="fw-bold">@ViewBag.BankCode</td>
+                            </tr>
+                            <tr>
+                                <td>Số tài khoản:</td>
+                                <td>
+                                    <span class="fw-bold" id="stk">@ViewBag.BankAccount</span>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary ms-2"
+                                            onclick="copyToClipboard('@ViewBag.BankAccount')">
+                                        <i class="fa fa-copy"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Chủ tài khoản:</td>
+                                <td class="fw-bold">@ViewBag.BankAccountName</td>
+                            </tr>
+                            <tr>
+                                <td>Số tiền:</td>
+                                <td class="text-danger fw-bold fs-5">@Model.TongTien.ToString("N0") đ</td>
+                            </tr>
+                            <tr>
+                                <td>Nội dung CK:</td>
+                                <td>
+                                    <span class="fw-bold text-danger" id="nd">@ViewBag.NoiDungCK</span>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary ms-2"
+                                            onclick="copyToClipboard('@ViewBag.NoiDungCK')">
+                                        <i class="fa fa-copy"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="alert alert-warning mt-2 small">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    Vui lòng ghi <b>đúng nội dung chuyển khoản</b> để chúng tôi xác nhận đơn hàng nhanh chóng.
+                </div>
+            </div>
+        </div>
+
+        <!-- UPLOAD BILL -->
+        <div class="card shadow-sm mt-4">
+            <div class="card-header bg-primary text-white fw-bold">
+                <i class="fa fa-upload"></i> Bước 2: Tải lên ảnh biên lai chuyển khoản
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("UploadBill", "GioHang", new { area = "User" },
+                        FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.MaDH" />
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-8">
+                            <label class="form-label">Chọn ảnh bill (JPG, PNG)</label>
+                            <input type="file" name="billFile" accept="image/*"
+                                   class="form-control" required onchange="previewBill(this)" />
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-warning btn-lg w-100">
+                                <i class="fa fa-check"></i> Gửi xác nhận
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-center">
+                        <img id="billPreview" src="" style="display:none;max-height:300px;" class="rounded shadow-sm" />
+                    </div>
+                }
+                <div class="alert alert-info small mt-3 mb-0">
+                    Sau khi bạn gửi ảnh bill, đơn hàng sẽ chuyển sang trạng thái
+                    <b>"Đã chuyển khoản"</b>. Chúng tôi sẽ xác nhận và giao hàng trong 24h.
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="@Url.Action("DonHangCuaToi", "TaiKhoan", new { area = "User" })"
+               class="btn btn-outline-secondary">
+                <i class="fa fa-list"></i> Xem đơn hàng của tôi
+            </a>
+            <a href="@Url.Action("Index", "Home", new { area = "User" })"
+               class="btn btn-outline-primary">
+                <i class="fa fa-home"></i> Về trang chủ
+            </a>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Đã copy: ' + text);
+            });
+        }
+        function previewBill(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            const img = document.getElementById('billPreview');
+            reader.onload = e => { img.src = e.target.result; img.style.display = 'inline'; };
+            reader.readAsDataURL(file);
+        }
+    </script>
+}

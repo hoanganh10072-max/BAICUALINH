@@ -1,0 +1,26 @@
+/* WEBLINH Admin */
+.admin-body { background: #f4f6f9; margin: 0; }
+
+.admin-sidebar {
+    width: 240px;
+    min-height: 100vh;
+    position: sticky;
+    top: 0;
+}
+.admin-sidebar .nav-link {
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+    transition: background .15s;
+}
+.admin-sidebar .nav-link:hover {
+    background: rgba(255,255,255,.1);
+}
+.admin-sidebar .nav-link.active {
+    color: #212529 !important;
+    font-weight: 600;
+}
+
+.admin-content { min-height: 100vh; }
+
+.card { border: none; box-shadow: 0 1px 4px rgba(0,0,0,.06); }

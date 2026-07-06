@@ -1,0 +1,40 @@
+# Visual Studio
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]uild/
+[Bb]in/
+[Oo]bj/
+
+# NuGet Packages
+packages/
+*.nupkg
+*.snupkg
+
+# Rider / VS Code
+.idea/
+.vscode/
+
+# Uploaded files (user content) - giu ket qua chay o local
+Content/uploads/*
+!Content/uploads/no-image.png
+!Content/uploads/no-image.png.txt
+Content/bills/*
+!Content/bills/.gitkeep
+
+# App data (SQL database file only, not script)
+App_Data/*.mdf
+App_Data/*.ldf
+
+# OS
+Thumbs.db
+.DS_Store

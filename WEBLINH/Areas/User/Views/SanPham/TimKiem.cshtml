@@ -1,0 +1,17 @@
+﻿@model System.Collections.Generic.List<WEBLINH.Models.SanPham>
+@{ ViewBag.Title = "Tìm kiếm: " + ViewBag.Keyword; }
+
+<h4>Kết quả tìm kiếm cho: "<span class="text-danger">@ViewBag.Keyword</span>" (@Model.Count kết quả)</h4>
+<hr />
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Không tìm thấy sản phẩm phù hợp.</div>
+}
+<div class="row g-3">
+    @foreach (var sp in Model)
+    {
+        <div class="col-md-3 col-6">
+            @Html.Partial("_ProductCard", sp)
+        </div>
+    }
+</div>

@@ -1,0 +1,35 @@
+/* WEBLINH Baby Shop - User site */
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: #fdf7f8;
+}
+
+.bg-pink { background: #f48fb1 !important; }
+.bg-pink-light { background: #fce4ec; }
+
+.topbar a:hover { color: #ffc107 !important; }
+
+.logo .fw-bold { letter-spacing: 1px; }
+
+.product-card {
+    transition: transform .2s, box-shadow .2s;
+    border: 1px solid #f8bbd0;
+}
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(244,143,177,.3) !important;
+}
+.product-card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.navbar-nav .nav-link:hover { color: #e91e63 !important; }
+
+.banner {
+    background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+}
+
+footer a:hover { color: #ffc107 !important; }
+
+.card-img-top { background: #fafafa; }

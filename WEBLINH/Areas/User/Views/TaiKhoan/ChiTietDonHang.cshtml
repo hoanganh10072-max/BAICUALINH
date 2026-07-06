@@ -1,0 +1,109 @@
+﻿@model WEBLINH.Models.DonHang
+@{
+    ViewBag.Title = "Chi tiết đơn hàng #" + Model.MaDH;
+    var choPhepHoaDon = new[] { "Đã xác nhận", "Đang giao", "Hoàn thành" };
+    bool coHoaDon = System.Array.IndexOf(choPhepHoaDon, Model.TrangThai) >= 0;
+}
+
+<div class="d-flex justify-content-between align-items-center">
+    <h2>Chi tiết đơn hàng #@Model.MaDH</h2>
+    @if (coHoaDon)
+    {
+        <a href="@Url.Action("HoaDon", "TaiKhoan", new { area = "User", id = Model.MaDH })"
+           class="btn btn-success" target="_blank">
+            <i class="fa fa-file-invoice"></i> Xem hóa đơn
+        </a>
+    }
+</div>
+<hr />
+
+@if (Model.TrangThai == "Đã chuyển khoản")
+{
+    <div class="alert alert-info d-flex align-items-center">
+        <i class="fa fa-hourglass-half fa-2x me-3"></i>
+        <div>
+            <b>Đơn hàng đang chờ shop xác nhận thanh toán.</b><br />
+            <small>Sau khi shop kiểm tra bill, đơn sẽ chuyển sang "Đã xác nhận" và bạn có thể xem hóa đơn.</small>
+        </div>
+    </div>
+}
+else if (coHoaDon)
+{
+    <div class="alert alert-success d-flex align-items-center">
+        <i class="fa fa-check-circle fa-2x me-3"></i>
+        <div>
+            <b>Đơn hàng đã được xác nhận!</b>
+            Bạn có thể xem/tải/in hóa đơn ở góc trên.
+        </div>
+    </div>
+}
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-light fw-bold">Thông tin đơn hàng</div>
+            <div class="card-body">
+                <p><b>Ngày đặt:</b> @Model.NgayDat.ToString("dd/MM/yyyy HH:mm")</p>
+                <p><b>Trạng thái:</b> <span class="badge bg-info">@Model.TrangThai</span></p>
+                <p><b>Tổng tiền:</b> <span class="text-danger fw-bold">@Model.TongTien.ToString("N0") đ</span></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-light fw-bold">Thông tin giao hàng</div>
+            <div class="card-body">
+                <p><b>Họ tên:</b> @Model.HoTenNhan</p>
+                <p><b>Số điện thoại:</b> @Model.SDTNhan</p>
+                <p><b>Địa chỉ:</b> @Model.DiaChiGiao</p>
+                <p><b>Ghi chú:</b> @Model.GhiChu</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h5 class="mt-4">Sản phẩm đã đặt</h5>
+<table class="table">
+    <thead class="table-light">
+        <tr>
+            <th>Ảnh</th>
+            <th>Tên sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Đơn giá</th>
+            <th>Thành tiền</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ct in Model.ChiTiet)
+        {
+            <tr>
+                <td><img src="@Url.Content("~/Content/uploads/" + (string.IsNullOrEmpty(ct.Anh) ? "no-image.png" : ct.Anh))" width="60" /></td>
+                <td>@ct.TenSP</td>
+                <td>@ct.SoLuong</td>
+                <td>@ct.DonGia.ToString("N0") đ</td>
+                <td class="fw-bold">@ct.ThanhTien.ToString("N0") đ</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (!string.IsNullOrEmpty(Model.AnhBill))
+{
+    <div class="card mt-3">
+        <div class="card-header bg-light fw-bold"><i class="fa fa-receipt"></i> Bill chuyển khoản đã gửi</div>
+        <div class="card-body text-center">
+            <img src="@Url.Content("~/Content/bills/" + Model.AnhBill)" style="max-height:300px;" class="img-fluid rounded" />
+        </div>
+    </div>
+}
+else if (Model.TrangThai == "Chờ thanh toán")
+{
+    <div class="alert alert-warning mt-3">
+        Đơn hàng chưa thanh toán.
+        <a href="@Url.Action("QRThanhToan", "GioHang", new { area = "User", id = Model.MaDH })" class="btn btn-sm btn-warning ms-2">
+            <i class="fa fa-qrcode"></i> Thanh toán ngay
+        </a>
+    </div>
+}
+
+<a href="@Url.Action("DonHangCuaToi", "TaiKhoan", new { area = "User" })" class="btn btn-secondary">
+    <i class="fa fa-arrow-left"></i> Quay lại
+</a>

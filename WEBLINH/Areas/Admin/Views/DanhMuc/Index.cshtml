@@ -1,0 +1,39 @@
+﻿@model System.Collections.Generic.List<WEBLINH.Models.DanhMuc>
+@{ ViewBag.Title = "Quản lý danh mục"; }
+
+<div class="d-flex justify-content-between mb-3">
+    <h4>Danh sách danh mục</h4>
+    <a href="@Url.Action("Create", "DanhMuc", new { area = "Admin" })" class="btn btn-warning">
+        <i class="fa fa-plus"></i> Thêm danh mục
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Mã</th>
+                    <th>Tên danh mục</th>
+                    <th>Mô tả</th>
+                    <th style="width:150px;">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var dm in Model)
+                {
+                    <tr>
+                        <td>@dm.MaDM</td>
+                        <td>@dm.TenDM</td>
+                        <td>@dm.MoTa</td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = dm.MaDM })" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                            <a href="@Url.Action("Delete", new { id = dm.MaDM })" class="btn btn-sm btn-danger"
+                               onclick="return confirm('Xác nhận xóa?');"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
