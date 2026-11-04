@@ -1,21 +1,22 @@
-﻿@model WEBLINH.Models.SanPham
-<div class="card product-card h-100 shadow-sm">
-    <a href="@Url.Action("ChiTiet", "SanPham", new { area = "User", id = Model.MaSP })">
-        <img src="@(string.IsNullOrEmpty(Model.Anh) ? Url.Content("~/Content/uploads/no-image.png") : Url.Content("~/Content/uploads/" + Model.Anh))"
-             class="card-img-top" alt="@Model.TenSP" />
+@model WEBLINH.Models.SanPham
+<article class="card product-card">
+    <a href="@Url.Action("ChiTiet", "SanPham", new { area = "User", id = Model.MaSP })" class="product-media">
+        @if (Model.NoiBat)
+        {
+            <span class="product-badge">Nổi bật</span>
+        }
+        <img src="@(string.IsNullOrEmpty(Model.Anh) ? Url.Content("~/Content/uploads/no-image-food.png") : Url.Content("~/Content/uploads/" + Model.Anh))"
+             alt="@Model.TenSP" loading="lazy" />
+        <span class="quick-view" aria-hidden="true"><i class="fa-regular fa-eye"></i></span>
     </a>
     <div class="card-body d-flex flex-column">
-        <h6 class="card-title">
-            <a href="@Url.Action("ChiTiet", "SanPham", new { area = "User", id = Model.MaSP })" class="text-decoration-none text-dark">
-                @Model.TenSP
-            </a>
-        </h6>
-        <div class="mt-auto">
-            <div class="text-danger fw-bold fs-5 mb-2">@Model.Gia.ToString("N0") đ</div>
-            <a href="@Url.Action("Them", "GioHang", new { area = "User", id = Model.MaSP })"
-               class="btn btn-warning btn-sm w-100">
-                <i class="fa fa-cart-plus"></i> Thêm giỏ
-            </a>
+        <div class="product-category">TẮC TẮC · TRỘN TƯƠI</div>
+        <h3 class="product-title">
+            <a href="@Url.Action("ChiTiet", "SanPham", new { area = "User", id = Model.MaSP })">@Model.TenSP</a>
+        </h3>
+        <div class="product-bottom mt-auto">
+            <div class="product-price">@Model.Gia.ToString("N0") đ</div>
+            <a href="@Url.Action("Them", "GioHang", new { area = "User", id = Model.MaSP })" class="add-cart-btn" title="Thêm vào giỏ hàng" aria-label="Thêm @Model.TenSP vào giỏ hàng"><i class="fa-solid fa-bag-shopping"></i></a>
         </div>
     </div>
-</div>
+</article>

@@ -38,12 +38,15 @@ namespace WEBLINH.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Menu m)
         {
+            if (MenuDAO.GetById(m.MaMenu) == null) return HttpNotFound();
             if (!ModelState.IsValid) return View(m);
             MenuDAO.Update(m);
             TempData["Msg"] = "Cập nhật menu thành công!";
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
             MenuDAO.Delete(id);

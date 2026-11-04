@@ -1,5 +1,5 @@
 ﻿-- =========================================================
--- WEBLINH - Web ban quan ao tre so sinh
+-- TẮC TẮC - Website bán chân gà sả tắc và sốt Thái
 -- Chay script nay trong SQL Server Management Studio (SSMS)
 -- =========================================================
 
@@ -110,35 +110,35 @@ GO
 
 -- Tai khoan admin mac dinh: admin / 123456
 INSERT INTO NguoiDung (TenDN, MatKhau, HoTen, Email, SDT, DiaChi, VaiTro)
-VALUES (N'admin', N'123456', N'Quản Trị Viên', N'admin@weblinh.com', N'0900000000', N'Hà Nội', N'Admin');
+VALUES (N'admin', N'123456', N'Quản Trị Viên', N'admin@tactac.vn', N'0909123456', N'TP.HCM', N'Admin');
 
 -- Tai khoan user mau: user1 / 123456
 INSERT INTO NguoiDung (TenDN, MatKhau, HoTen, Email, SDT, DiaChi, VaiTro)
-VALUES (N'user1', N'123456', N'Nguyễn Văn A', N'user1@gmail.com', N'0911111111', N'Hà Nội', N'User');
+VALUES (N'user1', N'123456', N'Nguyễn Văn A', N'user1@gmail.com', N'0911111111', N'TP.HCM', N'User');
 
 -- Danh muc san pham
 INSERT INTO DanhMuc (TenDM, MoTa) VALUES
-(N'Bodysuit', N'Bodysuit liền thân cho bé sơ sinh'),
-(N'Áo sơ sinh', N'Áo cotton mềm mại cho bé'),
-(N'Quần sơ sinh', N'Quần thoáng mát dễ mặc'),
-(N'Set quần áo', N'Bộ quần áo trọn gói'),
-(N'Mũ - Bao tay - Bao chân', N'Phụ kiện giữ ấm cho bé'),
-(N'Khăn - Yếm', N'Khăn quấn, yếm ăn dặm');
+(N'Chân gà sả tắc', N'Thơm mùi sả, tắc tươi và lá chanh'),
+(N'Chân gà sốt Thái', N'Chua cay đậm đà với sốt Thái nhà làm'),
+(N'Chân gà rút xương', N'Dễ ăn, giòn ngon và thấm vị'),
+(N'Combo ăn vui', N'Combo nhiều vị cho nhóm bạn và gia đình'),
+(N'Món ăn kèm', N'Các món ăn vặt dùng kèm'),
+(N'Đồ uống', N'Nước uống thanh mát cân bằng vị cay');
 
 -- San pham mau
 INSERT INTO SanPham (TenSP, MaDM, Gia, SoLuong, MoTa, Anh, NoiBat) VALUES
-(N'Bodysuit cotton hình gấu 0-6 tháng', 1, 129000, 50, N'Chất liệu cotton 100%, mềm mại, thoáng mát, an toàn cho da bé.', N'sp1.jpg', 1),
-(N'Bodysuit dài tay in họa tiết', 1, 149000, 40, N'Bodysuit dài tay giữ ấm cho bé mùa lạnh.', N'sp2.jpg', 1),
-(N'Áo cotton cột dây bo tay', 2, 89000, 100, N'Áo cotton cột dây tiện lợi, không gây khó chịu cho bé.', N'sp3.jpg', 0),
-(N'Áo tay dài cài vai', 2, 99000, 80, N'Áo tay dài cài vai dễ mặc, giữ ấm hiệu quả.', N'sp4.jpg', 1),
-(N'Quần dài đáy rộng cotton', 3, 79000, 90, N'Quần dài mềm mại, đáy rộng, thoải mái vận động.', N'sp5.jpg', 0),
-(N'Quần sơ sinh có bo cổ chân', 3, 69000, 70, N'Quần cotton có bo cổ chân giữ ấm cho bé.', N'sp6.jpg', 0),
-(N'Set bộ 5 chi tiết đầy đủ', 4, 350000, 30, N'Bộ trọn gói gồm áo, quần, mũ, bao tay, bao chân.', N'sp7.jpg', 1),
-(N'Set 3 bộ bodysuit hình thú', 4, 299000, 25, N'Set 3 bodysuit với nhiều màu sắc dễ thương.', N'sp8.jpg', 1),
-(N'Mũ cotton thóp co giãn', 5, 45000, 150, N'Mũ mềm mại bảo vệ thóp bé.', N'sp9.jpg', 0),
-(N'Bao tay bao chân sơ sinh combo', 5, 55000, 120, N'Combo bao tay + bao chân giữ ấm.', N'sp10.jpg', 0),
-(N'Khăn quấn cotton đa năng', 6, 120000, 60, N'Khăn quấn mềm mại nhiều công dụng.', N'sp11.jpg', 0),
-(N'Yếm ăn dặm chống thấm', 6, 39000, 200, N'Yếm chống thấm, dễ vệ sinh.', N'sp12.jpg', 0);
+(N'Chân gà sả tắc truyền thống', 1, 79000, 80, N'Chân gà giòn trộn cùng sả non, tắc tươi, lá chanh và nước mắm chua ngọt cân bằng. Phần 500g.', N'changa1.png', 1),
+(N'Chân gà sả tắc siêu cay', 1, 85000, 70, N'Phiên bản đậm vị với ớt tươi và sa tế nhà làm, thơm nồng nhưng vẫn giữ vị tắc thanh mát. Phần 500g.', N'changa2.png', 1),
+(N'Chân gà sốt Thái chua cay', 2, 89000, 90, N'Sốt Thái sánh quyện, chua cay ngọt hài hòa cùng tắc, ớt và rau thơm. Phần 500g.', N'changa3.png', 1),
+(N'Chân gà sốt Thái đặc biệt', 2, 119000, 60, N'Phần đặc biệt nhiều topping, sốt Thái đậm đà và vị cay bùng nổ dành cho hội mê ăn vặt. Phần 700g.', N'changa4.png', 1),
+(N'Chân gà rút xương sả tắc', 3, 99000, 65, N'Chân gà rút xương giòn sần sật, dễ ăn, trộn sả tắc thơm tươi. Phần 500g.', N'changa5.png', 0),
+(N'Chân gà rút xương sốt Thái', 3, 105000, 65, N'Chân gà rút xương thấm sốt Thái chua cay, thêm tắc và rau thơm cho vị ngon tròn đầy. Phần 500g.', N'changa6.png', 1),
+(N'Combo Song Vị', 4, 159000, 50, N'Hai phần chân gà sả tắc và sốt Thái để đổi vị, phù hợp 2-3 người.', N'changa7.png', 1),
+(N'Combo Tiệc Vui 4 vị', 4, 299000, 30, N'Đại tiệc gồm sả tắc, sốt Thái, sốt me và bơ tỏi dành cho nhóm 4-6 người.', N'changa8.png', 1),
+(N'Chân gà sốt me rang hành', 2, 89000, 55, N'Sốt me chua ngọt sánh mịn, thơm hành phi và mè rang, cuốn vị từ miếng đầu tiên. Phần 500g.', N'changa9.png', 0),
+(N'Chân gà bơ tỏi thơm giòn', 2, 95000, 55, N'Bơ tỏi thơm béo phủ đều chân gà giòn, thêm chút ớt cho vị đậm mà không ngấy. Phần 500g.', N'changa10.png', 0),
+(N'Xoài non lắc mắm', 5, 45000, 100, N'Xoài non giòn chua lắc mắm đường, ớt và muối tôm, món ăn kèm đúng điệu.', N'changa11.png', 0),
+(N'Trà tắc sả nhà làm', 6, 25000, 150, N'Trà tắc thanh mát, thơm sả, vị chua ngọt nhẹ giúp cân bằng món cay.', N'changa12.png', 0);
 GO
 
 -- Menu dieu huong (navbar)
@@ -149,5 +149,30 @@ INSERT INTO Menu (TenMenu, Url, ThuTu, HienThi) VALUES
 (N'Liên hệ',          N'/User/Home/LienHe',        4, 1);
 GO
 
-PRINT N'Da tao database WEBLINH thanh cong!';
+CREATE TABLE dbo.HomeBanner (
+    Id INT NOT NULL PRIMARY KEY CHECK (Id=1),
+    Eyebrow NVARCHAR(150) NOT NULL,
+    Title NVARCHAR(150) NOT NULL,
+    Highlight NVARCHAR(150) NULL,
+    Description NVARCHAR(600) NOT NULL,
+    ImageName NVARCHAR(300) NOT NULL,
+    ImageAlt NVARCHAR(200) NOT NULL,
+    ButtonText NVARCHAR(80) NOT NULL,
+    ButtonUrl NVARCHAR(300) NOT NULL,
+    Visible BIT NOT NULL DEFAULT 1
+);
+INSERT dbo.HomeBanner VALUES (1, N'Chân gà nhà làm · Trộn mới mỗi ngày', N'Giòn sần sật,', N'chua cay đã miệng', N'Sả thơm, tắc tươi, sốt Thái đậm đà quyện cùng chân gà giòn ngon. Một hộp là vui, hai hộp mới đã!', N'hero-changa.png', N'Chân gà sả tắc và sốt Thái TẮC TẮC', N'Đặt món ngay', N'/User/SanPham/DanhSach', 1);
+CREATE TABLE dbo.BaiViet (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    TieuDe NVARCHAR(200) NOT NULL,
+    TomTat NVARCHAR(600) NULL,
+    NoiDung NVARCHAR(MAX) NOT NULL,
+    Anh NVARCHAR(300) NULL,
+    DaDang BIT NOT NULL DEFAULT 0,
+    NgayTao DATETIME NOT NULL DEFAULT GETDATE(),
+    NgayDang DATETIME NULL
+);
+INSERT dbo.Menu(TenMenu, Url, ThuTu, HienThi) VALUES (N'Bài viết', N'/User/BaiViet', 5, 1);
+GO
+PRINT N'Da tao database TẮC TẮC thanh cong!';
 GO

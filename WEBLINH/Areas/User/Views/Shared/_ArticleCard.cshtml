@@ -1,0 +1,5 @@
+@model WEBLINH.Models.BaiViet
+<article class="card article-card h-100">
+    <a href="@Url.Action("ChiTiet", "BaiViet", new { area = "User", id = Model.Id })"><img src="@Url.Content("~/Content/uploads/" + (string.IsNullOrEmpty(Model.Anh) ? "no-image-food.png" : Model.Anh))" alt="@Model.TieuDe" loading="lazy" style="width:100%;aspect-ratio:16/10;object-fit:cover" /></a>
+    <div class="card-body"><small class="text-muted">@((Model.NgayDang ?? Model.NgayTao).ToString("dd/MM/yyyy")) · TẮC TẮC</small><h3 class="mt-2"><a href="@Url.Action("ChiTiet", "BaiViet", new { area = "User", id = Model.Id })">@Model.TieuDe</a></h3><p class="text-muted">@Model.TomTat</p><a href="@Url.Action("ChiTiet", "BaiViet", new { area = "User", id = Model.Id })">Đọc tiếp <i class="fa-solid fa-arrow-right ms-1"></i></a></div>
+</article>

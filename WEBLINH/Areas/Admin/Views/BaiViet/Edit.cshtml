@@ -1,0 +1,26 @@
+@model WEBLINH.Models.BaiViet
+@{ ViewBag.Title = Model.Id == 0 ? "Viết bài mới" : "Sửa bài viết"; }
+<div class="card"><div class="card-body">
+@using (Html.BeginForm("Save", "BaiViet", new { area = "Admin" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <div class="row g-4"><div class="col-lg-8">
+        <div class="mb-3">@Html.LabelFor(m => m.TieuDe)@Html.TextBoxFor(m => m.TieuDe, new { @class = "form-control", maxlength = 200, required = "required" })</div>
+        <div class="mb-3">@Html.LabelFor(m => m.TomTat)@Html.TextAreaFor(m => m.TomTat, new { @class = "form-control", rows = 3, maxlength = 600 })</div>
+        <div class="mb-3">@Html.LabelFor(m => m.NoiDung)@Html.TextAreaFor(m => m.NoiDung, new { @class = "form-control", rows = 18, maxlength = 100000, required = "required", placeholder = "Nhập bài viết. Xuống dòng để chia đoạn." })<small class="text-muted">Nhập văn bản trực tiếp, xuống dòng sẽ được giữ nguyên khi hiển thị.</small></div>
+    </div><div class="col-lg-4">
+        <label for="coverImage" class="form-label">Ảnh bìa</label><input id="coverImage" name="coverImage" type="file" accept="image/jpeg,image/png" class="form-control mb-2" /><small class="text-muted">JPG/PNG, tối đa 8 MB. Để trống để giữ ảnh cũ.</small>
+        <img id="cover-preview" src="@Url.Content("~/Content/uploads/" + (string.IsNullOrEmpty(Model.Anh) ? "no-image-food.png" : Model.Anh))" alt="Ảnh bìa" class="w-100 rounded-4 my-3" style="aspect-ratio:4/3;object-fit:cover" />
+        <div class="form-check my-3">@Html.CheckBoxFor(m => m.DaDang, new { @class = "form-check-input" })@Html.LabelFor(m => m.DaDang, new { @class = "form-check-label" })</div>
+        <button type="submit" class="btn btn-warning">Lưu bài viết</button><a class="btn btn-outline-secondary ms-2" href="@Url.Action("Index")">Quay lại</a>
+    </div></div>
+}
+</div></div>
+<script>
+document.getElementById('coverImage').addEventListener('change', function () {
+    var f = this.files[0]; if (!f) return;
+    var reader = new FileReader(); reader.onload = function (e) { document.getElementById('cover-preview').src = e.target.result; }; reader.readAsDataURL(f);
+});
+</script>

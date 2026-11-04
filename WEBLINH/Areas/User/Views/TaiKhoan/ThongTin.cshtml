@@ -1,34 +1,28 @@
-﻿@model WEBLINH.Models.NguoiDung
+@model WEBLINH.Models.NguoiDung
 @{ ViewBag.Title = "Thông tin tài khoản"; }
 
-<h2>Thông tin tài khoản</h2>
-<hr />
+<section class="page-hero">
+    <div class="section-kicker">Tài khoản của bạn</div>
+    <h1>Thông tin cá nhân</h1>
+    <p>Cập nhật thông tin liên hệ để quá trình nhận hàng nhanh chóng hơn.</p>
+</section>
 <div class="row justify-content-center">
-    <div class="col-md-7">
-        @using (Html.BeginForm("ThongTin", "TaiKhoan", new { area = "User" }, FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            <div class="mb-3">
-                <label>Tên đăng nhập</label>
-                <input class="form-control" value="@Model.TenDN" readonly />
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-body p-4 p-lg-5">
+                @using (Html.BeginForm("ThongTin", "TaiKhoan", new { area = "User" }, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row g-3">
+                        <div class="col-12"><label class="form-label">Tên đăng nhập</label><input class="form-control" value="@Model.TenDN" readonly /></div>
+                        <div class="col-md-6">@Html.LabelFor(m => m.HoTen, new { @class = "form-label" })@Html.TextBoxFor(m => m.HoTen, new { @class = "form-control" })</div>
+                        <div class="col-md-6">@Html.LabelFor(m => m.SDT, new { @class = "form-label" })@Html.TextBoxFor(m => m.SDT, new { @class = "form-control" })</div>
+                        <div class="col-12">@Html.LabelFor(m => m.Email, new { @class = "form-label" })@Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })</div>
+                        <div class="col-12">@Html.LabelFor(m => m.DiaChi, new { @class = "form-label" })@Html.TextAreaFor(m => m.DiaChi, new { @class = "form-control", rows = 3 })</div>
+                        <div class="col-12"><button class="btn-brand"><i class="fa-solid fa-check"></i>Lưu thay đổi</button></div>
+                    </div>
+                }
             </div>
-            <div class="mb-3">
-                @Html.LabelFor(m => m.HoTen)
-                @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control" })
-            </div>
-            <div class="mb-3">
-                @Html.LabelFor(m => m.Email)
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-            </div>
-            <div class="mb-3">
-                @Html.LabelFor(m => m.SDT)
-                @Html.TextBoxFor(m => m.SDT, new { @class = "form-control" })
-            </div>
-            <div class="mb-3">
-                @Html.LabelFor(m => m.DiaChi)
-                @Html.TextAreaFor(m => m.DiaChi, new { @class = "form-control", rows = 3 })
-            </div>
-            <button class="btn btn-warning">Cập nhật</button>
-        }
+        </div>
     </div>
 </div>

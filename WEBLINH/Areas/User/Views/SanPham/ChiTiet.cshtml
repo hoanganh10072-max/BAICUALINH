@@ -1,57 +1,69 @@
-﻿@model WEBLINH.Models.SanPham
+@model WEBLINH.Models.SanPham
 @{
     ViewBag.Title = Model.TenSP;
     var lienQuan = ViewBag.LienQuan as System.Collections.Generic.List<WEBLINH.Models.SanPham>;
 }
 
-<nav class="mb-3">
-    <a href="@Url.Action("Index", "Home", new { area = "User" })">Trang chủ</a> /
-    <a href="@Url.Action("DanhSach", "SanPham", new { area = "User", maDM = Model.MaDM })">@Model.TenDM</a> /
+<nav class="breadcrumb-clean">
+    <a href="@Url.Action("Index", "Home", new { area = "User" })">Trang chủ</a><span>/</span>
+    <a href="@Url.Action("DanhSach", "SanPham", new { area = "User", maDM = Model.MaDM })">@Model.TenDM</a><span>/</span>
     <span>@Model.TenSP</span>
 </nav>
 
-<div class="row g-4">
-    <div class="col-md-5">
-        <img src="@(string.IsNullOrEmpty(Model.Anh) ? Url.Content("~/Content/uploads/no-image.png") : Url.Content("~/Content/uploads/" + Model.Anh))"
-             class="img-fluid rounded shadow-sm" alt="@Model.TenSP" />
-    </div>
-    <div class="col-md-7">
-        <h2>@Model.TenSP</h2>
-        <p class="text-muted">Danh mục: <a href="@Url.Action("DanhSach", "SanPham", new { area = "User", maDM = Model.MaDM })">@Model.TenDM</a></p>
-        <div class="text-danger fs-2 fw-bold mb-3">@Model.Gia.ToString("N0") đ</div>
-        <p>Còn lại: <b>@Model.SoLuong</b> sản phẩm</p>
-
-        @using (Html.BeginForm("Them", "GioHang", new { area = "User" }, FormMethod.Get, new { @class = "mb-3" }))
-        {
-            <input type="hidden" name="id" value="@Model.MaSP" />
-            <div class="d-flex align-items-center gap-2 mb-3" style="max-width:300px;">
-                <label>Số lượng:</label>
-                <input type="number" name="soLuong" value="1" min="1" max="@Model.SoLuong" class="form-control" />
+<section class="product-detail">
+    <div class="row g-4 g-lg-5">
+        <div class="col-lg-6">
+            <div class="product-gallery">
+                <img src="@(string.IsNullOrEmpty(Model.Anh) ? Url.Content("~/Content/uploads/no-image-food.png") : Url.Content("~/Content/uploads/" + Model.Anh))" alt="@Model.TenSP" />
             </div>
-            <button type="submit" class="btn btn-warning btn-lg">
-                <i class="fa fa-cart-plus"></i> Thêm vào giỏ hàng
-            </button>
-            <a href="@Url.Action("Index", "GioHang", new { area = "User" })" class="btn btn-outline-secondary btn-lg">
-                <i class="fa fa-shopping-cart"></i> Xem giỏ hàng
-            </a>
-        }
-    </div>
-</div>
+        </div>
+        <div class="col-lg-6">
+            <div class="detail-panel">
+                <a class="detail-category" href="@Url.Action("DanhSach", "SanPham", new { area = "User", maDM = Model.MaDM })">@Model.TenDM</a>
+                <h1>@Model.TenSP</h1>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="stock-pill">Sẵn sàng @Model.SoLuong phần</span>
+                    @if (Model.NoiBat) { <span class="badge text-bg-light"><i class="fa-solid fa-star text-warning me-1"></i>Được yêu thích</span> }
+                </div>
+                <div class="detail-price">@Model.Gia.ToString("N0") đ</div>
+                <p class="text-muted">Được sơ chế kỹ, trộn mới với sốt nhà làm và đóng hộp sạch để bạn thưởng thức trọn vị.</p>
 
-<hr class="my-4" />
-<h4>Mô tả sản phẩm</h4>
-<div>@Html.Raw(Model.MoTa)</div>
+                <div class="purchase-box">
+                    @using (Html.BeginForm("Them", "GioHang", new { area = "User" }, FormMethod.Get))
+                    {
+                        <input type="hidden" name="id" value="@Model.MaSP" />
+                        <div class="quantity-row"><label for="soLuong">Số lượng</label><input id="soLuong" type="number" name="soLuong" value="1" min="1" max="@Model.SoLuong" class="form-control" /></div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <button type="submit" class="btn-brand flex-grow-1"><i class="fa-solid fa-bag-shopping"></i> Thêm vào giỏ hàng</button>
+                            <a href="@Url.Action("Index", "GioHang", new { area = "User" })" class="btn-soft"><i class="fa-regular fa-eye"></i> Xem giỏ</a>
+                        </div>
+                    }
+                </div>
+                <div class="detail-trust">
+                    <div><i class="fa-solid fa-lemon"></i><small>Nguyên liệu tươi</small></div>
+                    <div><i class="fa-solid fa-bowl-food"></i><small>Trộn mới khi đặt</small></div>
+                    <div><i class="fa-solid fa-motorcycle"></i><small>Giao hàng nhanh</small></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="description-panel">
+    <div class="section-kicker">Chi tiết sản phẩm</div>
+    <h3>Vị ngon trong từng miếng giòn</h3>
+    <div class="text-muted">@Html.Raw(Model.MoTa)</div>
+</section>
 
 @if (lienQuan != null && lienQuan.Any())
 {
-    <hr class="my-4" />
-    <h4>Sản phẩm liên quan</h4>
-    <div class="row g-3">
-        @foreach (var sp in lienQuan.Where(x => x.MaSP != Model.MaSP).Take(4))
-        {
-            <div class="col-md-3 col-6">
-                @Html.Partial("_ProductCard", sp)
-            </div>
-        }
-    </div>
+    <section class="home-section mb-0">
+        <div class="section-heading"><div><div class="section-kicker">Có thể bạn sẽ thích</div><h2>Sản phẩm liên quan</h2></div></div>
+        <div class="row g-3 g-lg-4">
+            @foreach (var sp in lienQuan.Where(x => x.MaSP != Model.MaSP).Take(4))
+            {
+                <div class="col-6 col-md-3">@Html.Partial("_ProductCard", sp)</div>
+            }
+        </div>
+    </section>
 }

@@ -31,6 +31,20 @@ Content/uploads/*
 Content/bills/*
 !Content/bills/.gitkeep
 
+# Project demo assets are versioned; runtime uploads stay local.
+WEBLINH/Content/uploads/*
+!WEBLINH/Content/uploads/no-image.png.txt
+!WEBLINH/Content/uploads/no-image.png
+!WEBLINH/Content/uploads/no-image-food.png
+!WEBLINH/Content/uploads/hero-baby-shop.png
+!WEBLINH/Content/uploads/hero-changa.png
+!WEBLINH/Content/uploads/changa*.png
+!WEBLINH/Content/uploads/sp*.png
+WEBLINH/Content/bills/*
+!WEBLINH/Content/bills/.gitkeep
+WEBLINH/App_Data/*.mdf
+WEBLINH/App_Data/*.ldf
+
 # App data (SQL database file only, not script)
 App_Data/*.mdf
 App_Data/*.ldf

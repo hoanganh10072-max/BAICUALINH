@@ -8,27 +8,31 @@
 <html lang="vi">
 <head>
     <meta charset="utf-8" />
-    <title>Hóa đơn #@Model.MaDH - WEBLINH</title>
+    <title>Hóa đơn #@Model.MaDH - TẮC TẮC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Playfair+Display:wght@500;600&amp;display=swap" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <style>
-        body { background: #f4f6f9; font-family: 'Segoe UI', sans-serif; }
+        body { background: #f6f5f2; color: #2e2925; font-family: 'Be Vietnam Pro', 'Segoe UI', sans-serif; }
         .invoice-box {
             max-width: 850px;
             margin: 30px auto;
             background: #fff;
             padding: 40px;
             box-shadow: 0 4px 20px rgba(0,0,0,.08);
-            border-radius: 8px;
+            border-radius: 20px;
         }
         .invoice-header {
-            border-bottom: 3px solid #f48fb1;
+            border-bottom: 3px solid #df775e;
             padding-bottom: 20px;
             margin-bottom: 30px;
         }
         .shop-name {
-            color: #e91e63;
-            font-weight: 700;
+            color: #df775e;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 600;
             font-size: 32px;
             letter-spacing: 1px;
         }
@@ -50,12 +54,12 @@
             text-align: center;
         }
         table.items th {
-            background: #fce4ec;
+            background: #eef2ed;
             font-weight: 600;
         }
         table.items td.text-left { text-align: left; }
         .total-row {
-            background: #fff3e0;
+            background: #f8e9e5;
             font-weight: 700;
             font-size: 18px;
         }
@@ -66,8 +70,8 @@
             text-align: center;
         }
         .stamp {
-            border: 2px dashed #4caf50;
-            color: #4caf50;
+            border: 2px dashed #5f7868;
+            color: #5f7868;
             transform: rotate(-15deg);
             padding: 8px 20px;
             font-weight: 700;
@@ -106,11 +110,11 @@
         <!-- Header -->
         <div class="invoice-header d-flex justify-content-between align-items-center">
             <div>
-                <div class="shop-name">WEB<span class="text-warning">LINH</span> BABY SHOP</div>
+                <div class="shop-name">TẮC <span class="text-warning">TẮC</span> FOOD</div>
                 <div class="small text-muted">
-                    <i class="fa fa-map-marker-alt"></i> Số 1, Đường ABC, Hà Nội<br />
-                    <i class="fa fa-phone"></i> 0900 000 000 &nbsp;|&nbsp;
-                    <i class="fa fa-envelope"></i> weblinh@babyshop.com
+                    <i class="fa fa-map-marker-alt"></i> 123 Nguyễn Trãi, Quận 5, TP.HCM<br />
+                    <i class="fa fa-phone"></i> 0909 123 456 &nbsp;|&nbsp;
+                    <i class="fa fa-envelope"></i> hello@tactac.vn
                 </div>
             </div>
             <div class="text-end">
@@ -195,12 +199,12 @@
                 <div class="fw-bold">Người bán</div>
                 <div class="small text-muted">(Ký, đóng dấu)</div>
                 <div style="height:60px;"></div>
-                <div>WEBLINH Baby Shop</div>
+                <div>TẮC TẮC Food</div>
             </div>
         </div>
 
         <div class="footer-note">
-            Cảm ơn quý khách đã mua sắm tại WEBLINH Baby Shop!<br />
+            Cảm ơn quý khách đã đặt món tại TẮC TẮC!<br />
             Hóa đơn được lập tự động từ hệ thống, có giá trị pháp lý tương đương phiếu bán hàng.
         </div>
     </div>

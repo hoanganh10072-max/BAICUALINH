@@ -1,0 +1,31 @@
+@model WEBLINH.Models.HomeBanner
+@{ ViewBag.Title = "Banner trang chủ"; }
+<div class="d-flex justify-content-between align-items-center mb-4 gap-3">
+    <p class="text-muted mb-0">Thay ảnh, tiêu đề và nút đặt món. Nội dung được cập nhật ngay sau khi lưu.</p>
+    <a href="@Url.Action("Index", "Home", new { area = "User" })" target="_blank" rel="noopener" class="btn btn-outline-secondary">Xem trang chủ</a>
+</div>
+<div class="row g-4">
+    <div class="col-lg-7"><div class="card"><div class="card-body">
+        @using (Html.BeginForm("Index", "TrangChu", new { area = "Admin" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            <div class="mb-3"><label for="bannerImage" class="form-label">Thay ảnh banner</label><input id="bannerImage" name="bannerImage" type="file" accept="image/jpeg,image/png" class="form-control" /><small class="text-muted">JPG/PNG, tối đa 8 MB. Nên dùng ảnh ngang 16:9, món nằm bên phải. Để trống để giữ ảnh hiện tại.</small></div>
+            <div class="mb-3">@Html.LabelFor(m => m.Eyebrow)@Html.TextBoxFor(m => m.Eyebrow, new { @class = "form-control", maxlength = 150 })</div>
+            <div class="mb-3">@Html.LabelFor(m => m.Title)@Html.TextBoxFor(m => m.Title, new { @class = "form-control", maxlength = 150 })</div>
+            <div class="mb-3">@Html.LabelFor(m => m.Highlight)@Html.TextBoxFor(m => m.Highlight, new { @class = "form-control", maxlength = 150 })</div>
+            <div class="mb-3">@Html.LabelFor(m => m.Description)@Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 3, maxlength = 600 })</div>
+            <div class="mb-3">@Html.LabelFor(m => m.ImageAlt)@Html.TextBoxFor(m => m.ImageAlt, new { @class = "form-control", maxlength = 200 })</div>
+            <div class="row"><div class="col-md-5 mb-3">@Html.LabelFor(m => m.ButtonText)@Html.TextBoxFor(m => m.ButtonText, new { @class = "form-control", maxlength = 80 })</div><div class="col-md-7 mb-3">@Html.LabelFor(m => m.ButtonUrl)@Html.TextBoxFor(m => m.ButtonUrl, new { @class = "form-control", maxlength = 300 })<small class="text-muted">Ví dụ: /User/SanPham/DanhSach</small></div></div>
+            <div class="form-check mb-4">@Html.CheckBoxFor(m => m.Visible, new { @class = "form-check-input" })@Html.LabelFor(m => m.Visible, new { @class = "form-check-label" })</div>
+            <button type="submit" class="btn btn-warning">Lưu banner</button>
+        }
+    </div></div></div>
+    <div class="col-lg-5"><div class="card"><div class="card-header fw-bold">Ảnh banner hiện tại</div><img id="banner-preview" src="@Url.Content("~/Content/uploads/" + Model.ImageName)" alt="@Model.ImageAlt" style="width:100%;aspect-ratio:16/9;object-fit:cover" /><div class="card-body"><h4>@Model.Title @Model.Highlight</h4><p>@Model.Description</p><span class="badge @(Model.Visible ? "bg-success" : "bg-secondary")">@(Model.Visible ? "Đang hiển thị" : "Đã ẩn")</span></div></div></div>
+</div>
+<script>
+document.getElementById('bannerImage').addEventListener('change', function () {
+    var f = this.files[0]; if (!f) return;
+    var reader = new FileReader(); reader.onload = function (e) { document.getElementById('banner-preview').src = e.target.result; }; reader.readAsDataURL(f);
+});
+</script>

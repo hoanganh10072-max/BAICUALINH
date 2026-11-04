@@ -1,0 +1,7 @@
+@model System.Collections.Generic.List<WEBLINH.Models.BaiViet>
+@{ ViewBag.Title = "Bài viết"; }
+<section class="page-hero"><div class="section-kicker">Góc bếp TẮC TẮC</div><h1>Chuyện món ngon</h1><p>Cập nhật món mới và những câu chuyện từ căn bếp.</p></section>
+<div class="row g-4">
+@foreach (var b in Model) { <div class="col-md-6 col-lg-4">@Html.Partial("_ArticleCard", b)</div> }
+</div>
+@if (Model.Count == 0) { <div class="content-feature text-center"><h2>Góc bếp đang chuẩn bị bài mới</h2><p class="text-muted">Trong lúc chờ, cùng khám phá menu món ngon nhé.</p><a class="btn-brand" href="@Url.Action("DanhSach", "SanPham", new { area = "User" })">Xem menu</a></div> }

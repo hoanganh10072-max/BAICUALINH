@@ -1,0 +1,10 @@
+@model WEBLINH.Models.BaiViet
+@{ ViewBag.Title = Model.TieuDe; }
+<nav class="breadcrumb-clean"><a href="@Url.Action("Index", "Home", new { area = "User" })">Trang chủ</a><span>/</span><a href="@Url.Action("Index")">Bài viết</a><span>/</span><span>@Model.TieuDe</span></nav>
+<article class="content-feature article-detail">
+    <div class="section-kicker">Góc bếp TẮC TẮC · @((Model.NgayDang ?? Model.NgayTao).ToString("dd/MM/yyyy"))</div>
+    <h1>@Model.TieuDe</h1><p class="lead text-muted mt-3">@Model.TomTat</p>
+    @if (!string.IsNullOrEmpty(Model.Anh)) { <img class="article-cover" src="@Url.Content("~/Content/uploads/" + Model.Anh)" alt="@Model.TieuDe" /> }
+    <div class="article-body">@Model.NoiDung</div>
+    <a href="@Url.Action("Index")" class="btn-soft mt-4">← Tất cả bài viết</a>
+</article>

@@ -1,61 +1,108 @@
-﻿@{
+@{
     ViewBag.Title = "Trang chủ";
     var noiBat = ViewBag.NoiBat as System.Collections.Generic.List<WEBLINH.Models.SanPham>;
     var moiNhat = ViewBag.MoiNhat as System.Collections.Generic.List<WEBLINH.Models.SanPham>;
     var danhMuc = ViewBag.DanhMuc as System.Collections.Generic.List<WEBLINH.Models.DanhMuc>;
+    var banner = ViewBag.Banner as WEBLINH.Models.HomeBanner;
+    var baiViet = ViewBag.BaiViet as System.Collections.Generic.List<WEBLINH.Models.BaiViet>;
+    string[] categoryIcons = { "fa-lemon", "fa-pepper-hot", "fa-drumstick-bite", "fa-box-open", "fa-bowl-food", "fa-glass-water" };
+    string[] categoryImages = { "changa1.png", "changa3.png", "changa5.png", "changa8.png", "changa11.png", "changa12.png" };
 }
 
-<!-- Banner -->
-<div class="banner bg-pink-light rounded p-5 mb-4 text-center">
-    <h1 class="fw-bold">Chào mừng đến với WEBLINH Baby Shop</h1>
-    <p class="lead">Quần áo trẻ sơ sinh chất lượng - An toàn - Giá tốt nhất</p>
-    <a href="@Url.Action("DanhSach", "SanPham", new { area = "User" })" class="btn btn-warning btn-lg">
-        Mua sắm ngay <i class="fa fa-arrow-right"></i>
-    </a>
-</div>
+@if (banner != null && banner.Visible)
+{
+<section class="hero food-hero">
+    <div class="hero-media">
+        <img src="@Url.Content("~/Content/uploads/" + banner.ImageName)" alt="@banner.ImageAlt" />
+    </div>
+    <div class="hero-copy">
+        <span class="eyebrow">@banner.Eyebrow</span>
+        <h1>@banner.Title <em>@banner.Highlight</em></h1>
+        <p>@banner.Description</p>
+        <div class="hero-actions">
+            <a href="@banner.ButtonUrl" class="btn-brand">@banner.ButtonText <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="#menu-noi-bat" class="btn-soft">Xem món bán chạy</a>
+        </div>
+        <div class="hero-note"><i class="fa-solid fa-circle-check"></i> Trộn mới · Đóng hộp sạch · Giao nhanh</div>
+    </div>
+    <div class="hero-badge"><span>Làm trong ngày</span><b>Trộn tươi</b><span>giao thật nhanh</span></div>
+</section>
+}
 
-<!-- Danh muc -->
-<h4 class="mb-3">Danh mục sản phẩm</h4>
-<div class="row g-3 mb-5">
-    @if (danhMuc != null)
-    {
-        foreach (var dm in danhMuc)
+<section class="home-section">
+    <div class="section-heading">
+        <div><div class="section-kicker">Chọn đúng gu</div><h2>Hôm nay bạn thèm vị nào?</h2></div>
+        <p>Từ sả tắc thơm dịu đến sốt Thái chua cay bùng vị, menu TẮC TẮC có đủ món cho một mình hoặc cả hội.</p>
+    </div>
+    <div class="row g-3">
+        @if (danhMuc != null)
         {
-            <div class="col-md-2 col-6">
-                <a href="@Url.Action("DanhSach", "SanPham", new { area = "User", maDM = dm.MaDM })"
-                   class="btn btn-outline-primary w-100 py-3">
-                    <i class="fa fa-tags"></i><br />
-                    @dm.TenDM
-                </a>
-            </div>
+            for (int i = 0; i < danhMuc.Count; i++)
+            {
+                var dm = danhMuc[i];
+                <div class="col-6 col-md-4 col-lg-2">
+                    <a href="@Url.Action("DanhSach", "SanPham", new { area = "User", maDM = dm.MaDM })" class="category-card">
+                        <img class="category-cover" src="@Url.Content("~/Content/uploads/" + categoryImages[i % categoryImages.Length])" alt="" loading="lazy" />
+                        <span class="category-icon"><i class="fa-solid @categoryIcons[i % categoryIcons.Length]"></i></span>
+                        <span><strong>@dm.TenDM</strong><small>Chọn món <i class="fa-solid fa-arrow-right ms-1"></i></small></span>
+                    </a>
+                </div>
+            }
         }
-    }
-</div>
+    </div>
+</section>
 
-<!-- San pham noi bat -->
-<h4 class="mb-3">🔥 Sản phẩm nổi bật</h4>
-<div class="row g-3 mb-5">
-    @if (noiBat != null)
-    {
-        foreach (var sp in noiBat)
+<section class="home-section" id="menu-noi-bat">
+    <div class="section-heading">
+        <div><div class="section-kicker">Hội mê ăn vặt chọn nhiều</div><h2>Món ngon bán chạy</h2></div>
+        <a href="@Url.Action("DanhSach", "SanPham", new { area = "User" })" class="section-link">Xem toàn bộ menu <i class="fa-solid fa-arrow-right ms-1"></i></a>
+    </div>
+    <div class="row g-3 g-lg-4">
+        @if (noiBat != null)
         {
-            <div class="col-md-3 col-6">
-                @Html.Partial("_ProductCard", sp)
-            </div>
+            foreach (var sp in noiBat)
+            {
+                <div class="col-6 col-md-4 col-lg-3">@Html.Partial("_ProductCard", sp)</div>
+            }
         }
-    }
-</div>
+    </div>
+</section>
 
-<!-- San pham moi -->
-<h4 class="mb-3">🆕 Sản phẩm mới nhất</h4>
-<div class="row g-3">
-    @if (moiNhat != null)
-    {
-        foreach (var sp in moiNhat)
+<section class="collection-banner home-section">
+    <div class="collection-copy">
+        <span class="eyebrow">Bếp TẮC TẮC</span>
+        <h2>Ngon từ vị sốt, chỉn chu từ căn bếp</h2>
+        <p>Chân gà được sơ chế kỹ, nguyên liệu tươi được chuẩn bị mỗi ngày và từng hộp chỉ trộn khi có đơn để giữ trọn độ giòn ngon.</p>
+        <a href="@Url.Action("GioiThieu", "Home", new { area = "User" })" class="btn-brand mt-2">Xem cam kết của chúng mình</a>
+    </div>
+    <div class="collection-icons">
+        <div><i class="fa-solid fa-lemon"></i><b>Tắc &amp; sả tươi</b><small>Thơm tự nhiên</small></div>
+        <div><i class="fa-solid fa-pepper-hot"></i><b>Sốt nhà làm</b><small>Chua cay cân bằng</small></div>
+        <div><i class="fa-solid fa-hand-sparkles"></i><b>Sơ chế sạch</b><small>Gọn gàng, kỹ lưỡng</small></div>
+        <div><i class="fa-solid fa-clock"></i><b>Trộn khi có đơn</b><small>Giữ độ giòn ngon</small></div>
+    </div>
+</section>
+
+<section class="home-section">
+    <div class="section-heading">
+        <div><div class="section-kicker">Ăn thêm cho vui</div><h2>Thử thêm món mới</h2></div>
+        <p>Thêm chút xoài non, trà tắc hoặc một vị sốt khác để buổi ăn vặt của bạn trọn vẹn hơn.</p>
+    </div>
+    <div class="row g-3 g-lg-4">
+        @if (moiNhat != null)
         {
-            <div class="col-md-3 col-6">
-                @Html.Partial("_ProductCard", sp)
-            </div>
+            foreach (var sp in moiNhat)
+            {
+                <div class="col-6 col-md-4 col-lg-3">@Html.Partial("_ProductCard", sp)</div>
+            }
         }
-    }
-</div>
+    </div>
+</section>
+
+@if (baiViet != null && baiViet.Count > 0)
+{
+    <section class="home-section mb-0">
+        <div class="section-heading"><div><div class="section-kicker">Góc bếp TẮC TẮC</div><h2>Chuyện món ngon</h2></div><a class="section-link" href="@Url.Action("Index", "BaiViet", new { area = "User" })">Tất cả bài viết →</a></div>
+        <div class="row g-4">@foreach (var b in baiViet) { <div class="col-md-4">@Html.Partial("_ArticleCard", b)</div> }</div>
+    </section>
+}

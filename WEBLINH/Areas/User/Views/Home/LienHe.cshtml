@@ -1,22 +1,33 @@
-﻿@{ ViewBag.Title = "Liên hệ"; }
+@{ ViewBag.Title = "Liên hệ"; }
 
-<h2>Liên hệ với chúng tôi</h2>
-<hr />
+<section class="page-hero">
+    <div class="section-kicker">Luôn sẵn sàng lắng nghe</div>
+    <h1>Liên hệ với TẮC TẮC</h1>
+    <p>Nhắn chúng mình nếu bạn muốn tư vấn vị cay, chọn combo hoặc cần hỗ trợ đơn hàng.</p>
+</section>
+
 <div class="row g-4">
-    <div class="col-md-6">
-        <h5>Thông tin cửa hàng</h5>
-        <p><i class="fa fa-map-marker-alt text-danger"></i> <b>Địa chỉ:</b> Số 1, Đường ABC, Quận XYZ, Hà Nội</p>
-        <p><i class="fa fa-phone text-success"></i> <b>Hotline:</b> 0900 000 000</p>
-        <p><i class="fa fa-envelope text-primary"></i> <b>Email:</b> weblinh@babyshop.com</p>
-        <p><i class="fa fa-clock text-warning"></i> <b>Giờ mở cửa:</b> 8:00 - 22:00 tất cả các ngày</p>
+    <div class="col-lg-5">
+        <div class="contact-card">
+            <span class="eyebrow">Thông tin cửa hàng</span>
+            <div class="contact-row"><i class="fa-solid fa-location-dot"></i><span><b>Ghé TẮC TẮC</b><small>123 Nguyễn Trãi, Quận 5, TP.HCM</small></span></div>
+            <div class="contact-row"><i class="fa-solid fa-phone"></i><span><b>Đặt món nhanh</b><small>0909 123 456</small></span></div>
+            <div class="contact-row"><i class="fa-regular fa-envelope"></i><span><b>Gửi email</b><small>hello@tactac.vn</small></span></div>
+            <div class="contact-row mb-0"><i class="fa-regular fa-clock"></i><span><b>Giờ nhận đơn</b><small>10:00 – 22:00, tất cả các ngày</small></span></div>
+        </div>
     </div>
-    <div class="col-md-6">
-        <h5>Gửi liên hệ</h5>
-        <form>
-            <div class="mb-2"><input class="form-control" placeholder="Họ tên" /></div>
-            <div class="mb-2"><input class="form-control" placeholder="Email" /></div>
-            <div class="mb-2"><textarea class="form-control" rows="4" placeholder="Nội dung"></textarea></div>
-            <button type="button" class="btn btn-warning">Gửi</button>
-        </form>
+    <div class="col-lg-7">
+        <div class="contact-card">
+            <h3 class="mb-1">Gửi lời nhắn</h3>
+            <p class="text-muted mb-4">Chúng mình thường phản hồi trong ít phút trong giờ nhận đơn.</p>
+            <form>
+                <div class="row g-3">
+                    <div class="col-md-6"><label class="form-label">Họ và tên</label><input class="form-control" placeholder="Tên của bạn" /></div>
+                    <div class="col-md-6"><label class="form-label">Email</label><input type="email" class="form-control" placeholder="email@example.com" /></div>
+                    <div class="col-12"><label class="form-label">Nội dung cần hỗ trợ</label><textarea class="form-control" rows="5" placeholder="Bạn muốn TẮC TẮC hỗ trợ điều gì?"></textarea></div>
+                    <div class="col-12"><button type="button" class="btn-brand">Gửi lời nhắn <i class="fa-regular fa-paper-plane"></i></button></div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

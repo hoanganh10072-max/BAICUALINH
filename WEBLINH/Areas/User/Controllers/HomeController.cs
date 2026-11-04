@@ -7,6 +7,8 @@ namespace WEBLINH.Areas.User.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.Banner = ContentDAO.GetBanner();
+            ViewBag.BaiViet = ContentDAO.GetPosts(true, 3);
             ViewBag.DanhMuc = DanhMucDAO.GetAll();
             ViewBag.NoiBat = SanPhamDAO.GetNoiBat(8);
             ViewBag.MoiNhat = SanPhamDAO.GetMoiNhat(8);

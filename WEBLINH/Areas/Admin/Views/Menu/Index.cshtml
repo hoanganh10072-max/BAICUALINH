@@ -45,8 +45,11 @@
                         </td>
                         <td>
                             <a href="@Url.Action("Edit", new { id = m.MaMenu })" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                            <a href="@Url.Action("Delete", new { id = m.MaMenu })" class="btn btn-sm btn-danger"
-                               onclick="return confirm('Xác nhận xóa menu này?');"><i class="fa fa-trash"></i></a>
+                            @using (Html.BeginForm("Delete", "Menu", new { area = "Admin", id = m.MaMenu }, FormMethod.Post, new { @class = "d-inline", onsubmit = "return confirm('Xác nhận xóa menu này?');" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-danger" aria-label="Xóa menu"><i class="fa fa-trash"></i></button>
+                            }
                         </td>
                     </tr>
                 }
@@ -58,5 +61,6 @@
 <div class="alert alert-info mt-3 small">
     <b>Gợi ý:</b> Trường <b>Đường dẫn</b> nhập URL bắt đầu bằng dấu <code>/</code>.
     Ví dụ: <code>/</code> (trang chủ), <code>/User/SanPham/DanhSach</code>, <code>/User/Home/LienHe</code>.
-    <br /><b>Thứ tự</b> nhỏ hơn sẽ hiển thị bên trái trước.
+    <br /><b>Thứ tự</b> nhỏ hơn sẽ hiển thị bên trái trước. Bỏ chọn <b>Hiển thị</b> để ẩn mục khỏi trang khách hàng.
+    <br />Trang bài viết: <code>/User/BaiViet</code>. Bài cụ thể: <code>/User/BaiViet/ChiTiet/1</code> (thay 1 bằng mã bài đã đăng).
 </div>

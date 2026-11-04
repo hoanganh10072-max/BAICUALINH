@@ -1,62 +1,44 @@
-﻿@model WEBLINH.Models.DonHang
+@model WEBLINH.Models.DonHang
 @{
     ViewBag.Title = "Thanh toán";
     var cart = ViewBag.Cart as System.Collections.Generic.List<WEBLINH.Models.CartItem>;
     decimal tongTien = (decimal)ViewBag.TongTien;
 }
 
-<h2><i class="fa fa-credit-card"></i> Thanh toán đơn hàng</h2>
-<hr />
+<section class="page-hero">
+    <div class="section-kicker">Bước cuối cùng</div>
+    <h1>Thông tin giao hàng</h1>
+    <p>Điền chính xác thông tin để TẮC TẮC giao món ngon đến bạn thật nhanh nhé.</p>
+</section>
 <div class="row g-4">
-    <div class="col-md-7">
+    <div class="col-lg-7">
         @using (Html.BeginForm("ThanhToan", "GioHang", new { area = "User" }, FormMethod.Post))
         {
             @Html.AntiForgeryToken()
             <div class="card">
-                <div class="card-header bg-warning fw-bold">Thông tin giao hàng</div>
+                <div class="card-header fw-bold"><i class="fa-solid fa-location-dot me-2"></i>Thông tin người nhận</div>
                 <div class="card-body">
-                    <div class="mb-3">
-                        @Html.LabelFor(m => m.HoTenNhan, new { @class = "form-label" })
-                        @Html.TextBoxFor(m => m.HoTenNhan, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.HoTenNhan, "", new { @class = "text-danger" })
+                    <div class="row g-3">
+                        <div class="col-12">@Html.LabelFor(m => m.HoTenNhan, new { @class = "form-label" })@Html.TextBoxFor(m => m.HoTenNhan, new { @class = "form-control", placeholder = "Họ tên người nhận" })@Html.ValidationMessageFor(m => m.HoTenNhan, "", new { @class = "text-danger" })</div>
+                        <div class="col-12">@Html.LabelFor(m => m.SDTNhan, new { @class = "form-label" })@Html.TextBoxFor(m => m.SDTNhan, new { @class = "form-control", placeholder = "Số điện thoại liên hệ" })@Html.ValidationMessageFor(m => m.SDTNhan, "", new { @class = "text-danger" })</div>
+                        <div class="col-12">@Html.LabelFor(m => m.DiaChiGiao, new { @class = "form-label" })@Html.TextAreaFor(m => m.DiaChiGiao, new { @class = "form-control", rows = 3, placeholder = "Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành" })@Html.ValidationMessageFor(m => m.DiaChiGiao, "", new { @class = "text-danger" })</div>
+                        <div class="col-12">@Html.LabelFor(m => m.GhiChu, new { @class = "form-label" })@Html.TextAreaFor(m => m.GhiChu, new { @class = "form-control", rows = 3, placeholder = "Ví dụ: ít cay, thêm tắc, giao trước 19:00..." })</div>
                     </div>
-                    <div class="mb-3">
-                        @Html.LabelFor(m => m.SDTNhan, new { @class = "form-label" })
-                        @Html.TextBoxFor(m => m.SDTNhan, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.SDTNhan, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="mb-3">
-                        @Html.LabelFor(m => m.DiaChiGiao, new { @class = "form-label" })
-                        @Html.TextAreaFor(m => m.DiaChiGiao, new { @class = "form-control", rows = 2 })
-                        @Html.ValidationMessageFor(m => m.DiaChiGiao, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="mb-3">
-                        @Html.LabelFor(m => m.GhiChu, new { @class = "form-label" })
-                        @Html.TextAreaFor(m => m.GhiChu, new { @class = "form-control", rows = 2 })
-                    </div>
-                    <button type="submit" class="btn btn-warning btn-lg w-100">
-                        <i class="fa fa-check"></i> Đặt hàng ngay
-                    </button>
+                    <button type="submit" class="btn-brand w-100 mt-4"><i class="fa-solid fa-qrcode"></i>Tạo đơn hàng &amp; thanh toán QR</button>
                 </div>
             </div>
         }
     </div>
-    <div class="col-md-5">
+    <div class="col-lg-5">
         <div class="card">
-            <div class="card-header bg-light fw-bold">Đơn hàng của bạn</div>
+            <div class="card-header fw-bold"><i class="fa-solid fa-receipt me-2"></i>Tóm tắt đơn hàng</div>
             <div class="card-body">
                 @foreach (var item in cart)
                 {
-                    <div class="d-flex justify-content-between border-bottom py-2">
-                        <span>@item.TenSP <small class="text-muted">x@(item.SoLuong)</small></span>
-                        <span>@item.ThanhTien.ToString("N0") đ</span>
-                    </div>
+                    <div class="d-flex justify-content-between gap-3 border-bottom py-3"><span>@item.TenSP <small class="text-muted">× @item.SoLuong</small></span><b class="text-nowrap">@item.ThanhTien.ToString("N0") đ</b></div>
                 }
-                <div class="d-flex justify-content-between mt-3 fs-5">
-                    <b>Tổng cộng:</b>
-                    <b class="text-danger">@tongTien.ToString("N0") đ</b>
-                </div>
-                <div class="text-muted small mt-2">Thanh toán khi nhận hàng (COD)</div>
+                <div class="d-flex justify-content-between align-items-end mt-4"><span class="fw-bold">Tổng thanh toán</span><strong class="fs-3" style="color:var(--coral-dark)">@tongTien.ToString("N0") đ</strong></div>
+                <div class="alert alert-info small mt-3 mb-0"><i class="fa-solid fa-shield-halved me-2"></i>Thông tin chuyển khoản được tạo riêng cho đơn hàng này.</div>
             </div>
         </div>
     </div>

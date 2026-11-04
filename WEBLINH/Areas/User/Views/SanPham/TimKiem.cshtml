@@ -1,17 +1,18 @@
-﻿@model System.Collections.Generic.List<WEBLINH.Models.SanPham>
-@{ ViewBag.Title = "Tìm kiếm: " + ViewBag.Keyword; }
+@model System.Collections.Generic.List<WEBLINH.Models.SanPham>
+@{ ViewBag.Title = "Tìm kiếm"; }
 
-<h4>Kết quả tìm kiếm cho: "<span class="text-danger">@ViewBag.Keyword</span>" (@Model.Count kết quả)</h4>
-<hr />
+<section class="page-hero">
+    <div class="section-kicker">Kết quả tìm kiếm</div>
+    <h1>“@ViewBag.Keyword”</h1>
+    <p>Tìm thấy @Model.Count sản phẩm phù hợp với từ khóa của bạn.</p>
+</section>
 @if (!Model.Any())
 {
-    <div class="alert alert-info">Không tìm thấy sản phẩm phù hợp.</div>
+    <div class="alert alert-info"><i class="fa-solid fa-magnifying-glass me-2"></i>Chưa tìm thấy sản phẩm. Hãy thử một từ khóa ngắn hơn nhé.</div>
 }
-<div class="row g-3">
+<div class="row g-3 g-lg-4">
     @foreach (var sp in Model)
     {
-        <div class="col-md-3 col-6">
-            @Html.Partial("_ProductCard", sp)
-        </div>
+        <div class="col-6 col-md-4 col-lg-3">@Html.Partial("_ProductCard", sp)</div>
     }
 </div>

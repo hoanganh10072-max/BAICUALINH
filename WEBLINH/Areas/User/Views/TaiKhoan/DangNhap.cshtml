@@ -1,34 +1,25 @@
-﻿@{ ViewBag.Title = "Đăng nhập"; }
+@{ ViewBag.Title = "Đăng nhập"; }
 
-<div class="row justify-content-center">
-    <div class="col-md-5">
-        <div class="card shadow-sm">
-            <div class="card-header bg-warning text-center"><h4 class="mb-0">Đăng nhập</h4></div>
-            <div class="card-body">
-                @if (ViewBag.Loi != null)
-                {
-                    <div class="alert alert-danger">@ViewBag.Loi</div>
-                }
-                @using (Html.BeginForm("DangNhap", "TaiKhoan", new { area = "User" }, FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
-                    <div class="mb-3">
-                        <label class="form-label">Tên đăng nhập</label>
-                        <input name="tenDN" class="form-control" required />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Mật khẩu</label>
-                        <input name="matKhau" type="password" class="form-control" required />
-                    </div>
-                    <button class="btn btn-warning w-100">Đăng nhập</button>
-                }
-                <hr />
-                <div class="text-center">
-                    Chưa có tài khoản?
-                    <a href="@Url.Action("DangKy", "TaiKhoan", new { area = "User" })">Đăng ký ngay</a>
-                </div>
-            </div>
-        </div>
+<section class="auth-shell">
+    <div class="auth-intro">
+        <img class="auth-cover" src="@Url.Content("~/Content/uploads/changa3.png")" alt="Chân gà sốt Thái TẮC TẮC" />
+        <i class="fa-solid fa-pepper-hot"></i>
+        <h2>Chào mừng bạn trở lại</h2>
+        <p class="mb-0">Theo dõi đơn hàng, lưu thông tin giao nhận và đặt lại món yêu thích nhanh hơn.</p>
     </div>
-</div>
+    <div class="auth-form">
+        <div class="section-kicker">Tài khoản TẮC TẮC</div>
+        <h1>Đăng nhập</h1>
+        <p>Nhập thông tin tài khoản của bạn để tiếp tục.</p>
+        @if (ViewBag.Loi != null) { <div class="alert alert-danger">@ViewBag.Loi</div> }
+        @using (Html.BeginForm("DangNhap", "TaiKhoan", new { area = "User" }, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+            <div class="mb-3"><label class="form-label">Tên đăng nhập</label><input name="tenDN" class="form-control" placeholder="Nhập tên đăng nhập" required /></div>
+            <div class="mb-4"><label class="form-label">Mật khẩu</label><input name="matKhau" type="password" class="form-control" placeholder="Nhập mật khẩu" required /></div>
+            <button class="btn-brand w-100">Đăng nhập <i class="fa-solid fa-arrow-right"></i></button>
+        }
+        <div class="text-center mt-4 pt-3 border-top">Chưa có tài khoản? <a href="@Url.Action("DangKy", "TaiKhoan", new { area = "User" })" class="fw-bold">Đăng ký ngay</a></div>
+    </div>
+</section>

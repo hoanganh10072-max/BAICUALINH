@@ -1,57 +1,32 @@
-﻿@model WEBLINH.Models.NguoiDung
+@model WEBLINH.Models.NguoiDung
 @{ ViewBag.Title = "Đăng ký"; }
 
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card shadow-sm">
-            <div class="card-header bg-warning text-center"><h4 class="mb-0">Đăng ký tài khoản</h4></div>
-            <div class="card-body">
-                @if (ViewBag.Loi != null)
-                {
-                    <div class="alert alert-danger">@ViewBag.Loi</div>
-                }
-                @using (Html.BeginForm("DangKy", "TaiKhoan", new { area = "User" }, FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    <div class="mb-2">
-                        @Html.LabelFor(m => m.TenDN, new { @class = "form-label" })
-                        @Html.TextBoxFor(m => m.TenDN, new { @class = "form-control", required = "required" })
-                        @Html.ValidationMessageFor(m => m.TenDN, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="mb-2">
-                        @Html.LabelFor(m => m.MatKhau, new { @class = "form-label" })
-                        @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", required = "required" })
-                        @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Xác nhận mật khẩu</label>
-                        <input name="xacNhanMK" type="password" class="form-control" required />
-                    </div>
-                    <div class="mb-2">
-                        @Html.LabelFor(m => m.HoTen, new { @class = "form-label" })
-                        @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control", required = "required" })
-                        @Html.ValidationMessageFor(m => m.HoTen, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="mb-2">
-                        @Html.LabelFor(m => m.Email, new { @class = "form-label" })
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
-                    </div>
-                    <div class="mb-2">
-                        @Html.LabelFor(m => m.SDT, new { @class = "form-label" })
-                        @Html.TextBoxFor(m => m.SDT, new { @class = "form-control" })
-                    </div>
-                    <div class="mb-3">
-                        @Html.LabelFor(m => m.DiaChi, new { @class = "form-label" })
-                        @Html.TextAreaFor(m => m.DiaChi, new { @class = "form-control", rows = 2 })
-                    </div>
-                    <button class="btn btn-warning w-100">Đăng ký</button>
-                }
-                <hr />
-                <div class="text-center">
-                    Đã có tài khoản?
-                    <a href="@Url.Action("DangNhap", "TaiKhoan", new { area = "User" })">Đăng nhập</a>
-                </div>
-            </div>
-        </div>
+<section class="auth-shell">
+    <div class="auth-intro">
+        <img class="auth-cover" src="@Url.Content("~/Content/uploads/changa7.png")" alt="Combo chân gà TẮC TẮC" />
+        <i class="fa-solid fa-bowl-food"></i>
+        <h2>Gia nhập hội mê TẮC TẮC</h2>
+        <p class="mb-0">Tạo tài khoản để quản lý đơn hàng và đặt lại món ngon nhanh hơn ở những lần sau.</p>
     </div>
-</div>
+    <div class="auth-form">
+        <div class="section-kicker">Thành viên mới</div>
+        <h1>Tạo tài khoản</h1>
+        <p>Chỉ mất một phút để bắt đầu.</p>
+        @if (ViewBag.Loi != null) { <div class="alert alert-danger">@ViewBag.Loi</div> }
+        @using (Html.BeginForm("DangKy", "TaiKhoan", new { area = "User" }, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row g-3">
+                <div class="col-md-6">@Html.LabelFor(m => m.TenDN, new { @class = "form-label" })@Html.TextBoxFor(m => m.TenDN, new { @class = "form-control", required = "required" })@Html.ValidationMessageFor(m => m.TenDN, "", new { @class = "text-danger" })</div>
+                <div class="col-md-6">@Html.LabelFor(m => m.HoTen, new { @class = "form-label" })@Html.TextBoxFor(m => m.HoTen, new { @class = "form-control", required = "required" })@Html.ValidationMessageFor(m => m.HoTen, "", new { @class = "text-danger" })</div>
+                <div class="col-md-6">@Html.LabelFor(m => m.MatKhau, new { @class = "form-label" })@Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", required = "required" })@Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger" })</div>
+                <div class="col-md-6"><label class="form-label">Xác nhận mật khẩu</label><input name="xacNhanMK" type="password" class="form-control" required /></div>
+                <div class="col-md-6">@Html.LabelFor(m => m.Email, new { @class = "form-label" })@Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })</div>
+                <div class="col-md-6">@Html.LabelFor(m => m.SDT, new { @class = "form-label" })@Html.TextBoxFor(m => m.SDT, new { @class = "form-control" })</div>
+                <div class="col-12">@Html.LabelFor(m => m.DiaChi, new { @class = "form-label" })@Html.TextAreaFor(m => m.DiaChi, new { @class = "form-control", rows = 2 })</div>
+                <div class="col-12"><button class="btn-brand w-100">Tạo tài khoản <i class="fa-solid fa-arrow-right"></i></button></div>
+            </div>
+        }
+        <div class="text-center mt-4 pt-3 border-top">Đã có tài khoản? <a href="@Url.Action("DangNhap", "TaiKhoan", new { area = "User" })" class="fw-bold">Đăng nhập</a></div>
+    </div>
+</section>

@@ -1,42 +1,42 @@
-﻿@model System.Collections.Generic.List<WEBLINH.Models.SanPham>
+@model System.Collections.Generic.List<WEBLINH.Models.SanPham>
 @{
     ViewBag.Title = ViewBag.TenDM ?? "Tất cả sản phẩm";
     var dsDM = ViewBag.DanhMuc as System.Collections.Generic.List<WEBLINH.Models.DanhMuc>;
     int? maDMHT = ViewBag.MaDMHienTai as int?;
 }
 
-<div class="row">
-    <aside class="col-md-3 mb-3">
-        <div class="card">
-            <div class="card-header bg-warning fw-bold">Danh mục</div>
-            <ul class="list-group list-group-flush">
-                <a href="@Url.Action("DanhSach", "SanPham", new { area = "User" })"
-                   class="list-group-item @(maDMHT == null ? "active" : "")">Tất cả</a>
-                @if (dsDM != null)
-                {
-                    foreach (var dm in dsDM)
-                    {
-                        <a href="@Url.Action("DanhSach", "SanPham", new { area = "User", maDM = dm.MaDM })"
-                           class="list-group-item @(maDMHT == dm.MaDM ? "active" : "")">@dm.TenDM</a>
-                    }
-                }
-            </ul>
-        </div>
+<section class="page-hero">
+    <nav class="breadcrumb-clean mb-2"><a href="@Url.Action("Index", "Home", new { area = "User" })">Trang chủ</a><span>/</span><span>Sản phẩm</span></nav>
+    <h1>@ViewBag.Title</h1>
+    <p>Chọn món đúng gu: sả tắc thơm dịu, sốt Thái chua cay hay combo ăn vui cùng cả hội.</p>
+</section>
+
+<div class="catalog-layout">
+    <aside class="filter-card">
+        <h5><i class="fa-solid fa-sliders me-2"></i>Danh mục sản phẩm</h5>
+        <a href="@Url.Action("DanhSach", "SanPham", new { area = "User" })" class="filter-link @(maDMHT == null ? "active" : "")"><span>Tất cả sản phẩm</span><i class="fa-solid fa-chevron-right"></i></a>
+        @if (dsDM != null)
+        {
+            foreach (var dm in dsDM)
+            {
+                <a href="@Url.Action("DanhSach", "SanPham", new { area = "User", maDM = dm.MaDM })" class="filter-link @(maDMHT == dm.MaDM ? "active" : "")"><span>@dm.TenDM</span><i class="fa-solid fa-chevron-right"></i></a>
+            }
+        }
     </aside>
-    <div class="col-md-9">
-        <h4>@ViewBag.Title <small class="text-muted">(@Model.Count sản phẩm)</small></h4>
-        <hr />
+    <section>
+        <div class="catalog-toolbar">
+            <h2>@ViewBag.Title</h2>
+            <span class="result-count">@Model.Count sản phẩm phù hợp</span>
+        </div>
         @if (!Model.Any())
         {
-            <div class="alert alert-info">Không có sản phẩm nào.</div>
+            <div class="alert alert-info"><i class="fa-regular fa-face-smile me-2"></i>Chưa có sản phẩm trong danh mục này.</div>
         }
-        <div class="row g-3">
+        <div class="row g-3 g-lg-4">
             @foreach (var sp in Model)
             {
-                <div class="col-md-4 col-6">
-                    @Html.Partial("_ProductCard", sp)
-                </div>
+                <div class="col-6 col-md-4">@Html.Partial("_ProductCard", sp)</div>
             }
         </div>
-    </div>
+    </section>
 </div>

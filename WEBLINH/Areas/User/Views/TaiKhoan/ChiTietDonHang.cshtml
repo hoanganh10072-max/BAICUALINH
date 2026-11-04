@@ -76,7 +76,7 @@ else if (coHoaDon)
         @foreach (var ct in Model.ChiTiet)
         {
             <tr>
-                <td><img src="@Url.Content("~/Content/uploads/" + (string.IsNullOrEmpty(ct.Anh) ? "no-image.png" : ct.Anh))" width="60" /></td>
+                <td><img src="@Url.Content("~/Content/uploads/" + (string.IsNullOrEmpty(ct.Anh) ? "no-image-food.png" : ct.Anh))" width="60" /></td>
                 <td>@ct.TenSP</td>
                 <td>@ct.SoLuong</td>
                 <td>@ct.DonGia.ToString("N0") đ</td>

@@ -94,6 +94,34 @@
     <Content Include="Content\site.css" />
     <Content Include="Content\admin.css" />
     <Content Include="Content\uploads\no-image.png.txt" />
+    <Content Include="Content\uploads\no-image.png" />
+    <Content Include="Content\uploads\hero-baby-shop.png" />
+    <Content Include="Content\uploads\hero-changa.png" />
+    <Content Include="Content\uploads\no-image-food.png" />
+    <Content Include="Content\uploads\changa1.png" />
+    <Content Include="Content\uploads\changa2.png" />
+    <Content Include="Content\uploads\changa3.png" />
+    <Content Include="Content\uploads\changa4.png" />
+    <Content Include="Content\uploads\changa5.png" />
+    <Content Include="Content\uploads\changa6.png" />
+    <Content Include="Content\uploads\changa7.png" />
+    <Content Include="Content\uploads\changa8.png" />
+    <Content Include="Content\uploads\changa9.png" />
+    <Content Include="Content\uploads\changa10.png" />
+    <Content Include="Content\uploads\changa11.png" />
+    <Content Include="Content\uploads\changa12.png" />
+    <Content Include="Content\uploads\sp1.png" />
+    <Content Include="Content\uploads\sp2.png" />
+    <Content Include="Content\uploads\sp3.png" />
+    <Content Include="Content\uploads\sp4.png" />
+    <Content Include="Content\uploads\sp5.png" />
+    <Content Include="Content\uploads\sp6.png" />
+    <Content Include="Content\uploads\sp7.png" />
+    <Content Include="Content\uploads\sp8.png" />
+    <Content Include="Content\uploads\sp9.png" />
+    <Content Include="Content\uploads\sp10.png" />
+    <Content Include="Content\uploads\sp11.png" />
+    <Content Include="Content\uploads\sp12.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -115,6 +143,13 @@
     <Compile Include="Models\DonHangDAO.cs" />
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\MenuDAO.cs" />
+    <Compile Include="Models\HomeBanner.cs" />
+    <Compile Include="Models\BaiViet.cs" />
+    <Compile Include="Models\ContentDAO.cs" />
+    <Compile Include="Models\ContentImageUpload.cs" />
+    <Compile Include="Areas\Admin\Controllers\TrangChuController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BaiVietController.cs" />
+    <Compile Include="Areas\User\Controllers\BaiVietController.cs" />
     <Compile Include="Filters\AdminAuthorizeAttribute.cs" />
     <Compile Include="Areas\User\UserAreaRegistration.cs" />
     <Compile Include="Areas\User\Controllers\HomeController.cs" />
@@ -139,6 +174,8 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="App_Data\WEBLINH_Database.sql" />
+    <None Include="App_Data\TacTac_Migrate.sql" />
+    <None Include="App_Data\ContentManagement.sql" />
   </ItemGroup>
   <ItemGroup>
     <!-- User Area views -->
@@ -146,6 +183,9 @@
     <Content Include="Areas\User\Views\_ViewStart.cshtml" />
     <Content Include="Areas\User\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\User\Views\Shared\_ProductCard.cshtml" />
+    <Content Include="Areas\User\Views\Shared\_ArticleCard.cshtml" />
+    <Content Include="Areas\User\Views\BaiViet\Index.cshtml" />
+    <Content Include="Areas\User\Views\BaiViet\ChiTiet.cshtml" />
     <Content Include="Areas\User\Views\Home\Index.cshtml" />
     <Content Include="Areas\User\Views\Home\GioiThieu.cshtml" />
     <Content Include="Areas\User\Views\Home\LienHe.cshtml" />
@@ -167,6 +207,9 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\TrangChu\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\BaiViet\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\BaiViet\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Account\DangNhap.cshtml" />
     <Content Include="Areas\Admin\Views\DanhMuc\Index.cshtml" />
     <Content Include="Areas\Admin\Views\DanhMuc\Create.cshtml" />

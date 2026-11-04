@@ -1,8 +1,8 @@
-﻿@{
+@{
     var danhMucMenu = ViewBag.DanhMuc as System.Collections.Generic.List<WEBLINH.Models.DanhMuc>;
     var currentUser = Session["User"] as WEBLINH.Models.NguoiDung;
     var cart = Session["Cart"] as System.Collections.Generic.List<WEBLINH.Models.CartItem>;
-    int soLuongCart = cart == null ? 0 : cart.Count;
+    int soLuongCart = cart == null ? 0 : cart.Sum(x => x.SoLuong);
     var mainMenu = WEBLINH.Models.MenuDAO.GetVisible();
 }
 <!DOCTYPE html>
@@ -10,117 +10,137 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@ViewBag.Title - WEBLINH Baby Shop</title>
+    <meta name="theme-color" content="#151a12" />
+    <meta name="description" content="TẮC TẮC - Chân gà sả tắc, sốt Thái trộn mới mỗi ngày, đậm vị và giao nhanh." />
+    <title>@ViewBag.Title - TẮC TẮC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&amp;family=Nunito:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <link href="@Url.Content("~/Content/site.css")" rel="stylesheet" />
 </head>
 <body>
-    <!-- Top bar -->
-    <div class="topbar bg-dark text-white py-2 small">
-        <div class="container d-flex justify-content-between">
-            <span><i class="fa fa-phone"></i> Hotline: 0900 000 000</span>
-            <span>
-                @if (currentUser != null)
-                {
-                    <a href="@Url.Action("ThongTin", "TaiKhoan", new { area = "User" })" class="text-white me-3">
-                        <i class="fa fa-user"></i> @currentUser.HoTen
-                    </a>
-                    <a href="@Url.Action("DonHangCuaToi", "TaiKhoan", new { area = "User" })" class="text-white me-3">Đơn hàng</a>
-                    <a href="@Url.Action("DangXuat", "TaiKhoan", new { area = "User" })" class="text-white">Đăng xuất</a>
-                }
-                else
-                {
-                    <a href="@Url.Action("DangNhap", "TaiKhoan", new { area = "User" })" class="text-white me-3">Đăng nhập</a>
-                    <a href="@Url.Action("DangKy", "TaiKhoan", new { area = "User" })" class="text-white">Đăng ký</a>
-                }
-            </span>
+    <div class="announcement-bar">
+        <div class="container d-flex align-items-center justify-content-center justify-content-md-between gap-3">
+            <span><i class="fa-solid fa-pepper-hot me-2"></i>Trộn mới mỗi ngày · Vị chua cay cuốn miệng</span>
+            <span class="d-none d-md-inline"><i class="fa-solid fa-motorcycle me-2"></i>Freeship nội thành cho đơn từ 199.000đ</span>
         </div>
     </div>
 
-    <!-- Header -->
-    <header class="bg-pink py-3">
-        <div class="container d-flex align-items-center justify-content-between flex-wrap gap-3">
-            <a href="@Url.Action("Index", "Home", new { area = "User" })" class="logo text-decoration-none">
-                <span class="fs-3 fw-bold text-white">WEB<span class="text-warning">LINH</span></span>
-                <div class="text-white small">Baby Shop - Quần áo trẻ sơ sinh</div>
-            </a>
-            <form action="@Url.Action("TimKiem", "SanPham", new { area = "User" })" method="get" class="d-flex flex-grow-1 mx-md-4" style="max-width:500px;">
-                <input type="text" name="kw" class="form-control" placeholder="Tìm sản phẩm..." value="@ViewBag.Keyword" />
-                <button class="btn btn-warning" type="submit"><i class="fa fa-search"></i></button>
-            </form>
-            <a href="@Url.Action("Index", "GioHang", new { area = "User" })" class="btn btn-light position-relative">
-                <i class="fa fa-shopping-cart"></i> Giỏ hàng
-                <span class="badge bg-danger rounded-pill">@soLuongCart</span>
-            </a>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-main">
+                <a href="@Url.Action("Index", "Home", new { area = "User" })" class="brand" aria-label="TẮC TẮC - Chân gà nhà làm">
+                    <span class="brand-mark" aria-hidden="true">
+                        <svg viewBox="0 0 52 52" role="img"><circle cx="25" cy="26" r="14" /><path d="M26 11c4-6 11-6 15-2-3 6-8 9-15 8z" /><path d="M14 30c4-5 9-7 15-7-1 6-5 11-11 13z" /></svg>
+                    </span>
+                    <span><strong class="brand-wordmark">TẮC <span>TẮC</span></strong><small>Chân gà nhà làm · Trộn là mê</small></span>
+                </a>
+
+                <form action="@Url.Action("TimKiem", "SanPham", new { area = "User" })" method="get" class="header-search" role="search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="search" name="kw" placeholder="Tìm sả tắc, sốt Thái, combo..." value="@ViewBag.Keyword" aria-label="Tìm kiếm món ăn" />
+                    <button type="submit">Tìm món</button>
+                </form>
+
+                <div class="header-actions">
+                    @if (currentUser != null)
+                    {
+                        <div class="dropdown">
+                            <button class="header-action dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="action-icon"><i class="fa-regular fa-user"></i></span>
+                                <span class="d-none d-lg-block"><small>Xin chào</small><b>@currentUser.HoTen</b></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end account-menu">
+                                <li><a class="dropdown-item" href="@Url.Action("ThongTin", "TaiKhoan", new { area = "User" })"><i class="fa-regular fa-id-card"></i>Thông tin tài khoản</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("DonHangCuaToi", "TaiKhoan", new { area = "User" })"><i class="fa-solid fa-box"></i>Đơn hàng của tôi</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item text-danger" href="@Url.Action("DangXuat", "TaiKhoan", new { area = "User" })"><i class="fa-solid fa-arrow-right-from-bracket"></i>Đăng xuất</a></li>
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("DangNhap", "TaiKhoan", new { area = "User" })" class="header-action">
+                            <span class="action-icon"><i class="fa-regular fa-user"></i></span>
+                            <span class="d-none d-lg-block"><small>Tài khoản</small><b>Đăng nhập</b></span>
+                        </a>
+                    }
+                    <a href="@Url.Action("Index", "GioHang", new { area = "User" })" class="header-action cart-action">
+                        <span class="action-icon"><i class="fa-solid fa-bag-shopping"></i><em>@soLuongCart</em></span>
+                        <span class="d-none d-lg-block"><small>Giỏ món</small><b>@soLuongCart sản phẩm</b></span>
+                    </a>
+                </div>
+            </div>
         </div>
+
+        <nav class="main-nav navbar navbar-expand-lg">
+            <div class="container">
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Mở menu"><span class="navbar-toggler-icon"></span></button>
+                <span class="mobile-nav-label d-lg-none">Menu món ngon</span>
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav align-items-lg-center">
+                        @foreach (var mi in mainMenu)
+                        {
+                            <li class="nav-item"><a class="nav-link" href="@mi.Url">@mi.TenMenu</a></li>
+                        }
+                        @if (danhMucMenu != null && danhMucMenu.Count > 0)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Chọn theo vị</a>
+                                <ul class="dropdown-menu category-dropdown">
+                                    @foreach (var dm in danhMucMenu)
+                                    {
+                                        <li><a class="dropdown-item" href="@Url.Action("DanhSach", "SanPham", new { area = "User", maDM = dm.MaDM })"><span><i class="fa-solid fa-pepper-hot"></i></span>@dm.TenDM</a></li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                    <a href="tel:0909123456" class="nav-support ms-lg-auto"><i class="fa-solid fa-phone-volume"></i><span><small>Đặt món nhanh</small><b>0909 123 456</b></span></a>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+    <main class="site-main">
         <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="navbar-nav">
-                    @foreach (var mi in mainMenu)
-                    {
-                        <li class="nav-item"><a class="nav-link" href="@mi.Url">@mi.TenMenu</a></li>
-                    }
-                    @if (danhMucMenu != null && danhMucMenu.Count > 0)
-                    {
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Danh mục</a>
-                            <ul class="dropdown-menu">
-                                @foreach (var dm in danhMucMenu)
-                                {
-                                    <li>
-                                        <a class="dropdown-item" href="@Url.Action("DanhSach", "SanPham", new { area = "User", maDM = dm.MaDM })">@dm.TenDM</a>
-                                    </li>
-                                }
-                            </ul>
-                        </li>
-                    }
-                </ul>
-            </div>
+            @if (TempData["Msg"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show site-alert" role="alert">
+                    <i class="fa-solid fa-circle-check me-2"></i>@TempData["Msg"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
+                </div>
+            }
+            @RenderBody()
         </div>
-    </nav>
-
-    <!-- Content -->
-    <main class="container my-4">
-        @if (TempData["Msg"] != null)
-        {
-            <div class="alert alert-success">@TempData["Msg"]</div>
-        }
-        @RenderBody()
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-4 mt-5">
+    <section class="service-strip">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>WEBLINH Baby Shop</h5>
-                    <p>Chuyên cung cấp quần áo cho trẻ sơ sinh chất lượng, an toàn, giá tốt.</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Liên hệ</h5>
-                    <p><i class="fa fa-map-marker-alt"></i> Số 1, Đường ABC, Hà Nội</p>
-                    <p><i class="fa fa-phone"></i> 0900 000 000</p>
-                    <p><i class="fa fa-envelope"></i> weblinh@babyshop.com</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Chính sách</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white-50">Chính sách vận chuyển</a></li>
-                        <li><a href="#" class="text-white-50">Chính sách đổi trả</a></li>
-                        <li><a href="#" class="text-white-50">Bảo mật thông tin</a></li>
-                    </ul>
-                </div>
+            <div class="row g-3">
+                <div class="col-6 col-lg-3"><div class="service-item"><i class="fa-solid fa-bowl-food"></i><span><b>Trộn mới mỗi ngày</b><small>Làm khi bạn đặt món</small></span></div></div>
+                <div class="col-6 col-lg-3"><div class="service-item"><i class="fa-solid fa-lemon"></i><span><b>Nguyên liệu tươi</b><small>Tắc, sả và rau thơm</small></span></div></div>
+                <div class="col-6 col-lg-3"><div class="service-item"><i class="fa-solid fa-box"></i><span><b>Đóng hộp sạch</b><small>Gọn gàng, tiện mang đi</small></span></div></div>
+                <div class="col-6 col-lg-3"><div class="service-item"><i class="fa-solid fa-motorcycle"></i><span><b>Giao hàng nhanh</b><small>Nội thành trong ngày</small></span></div></div>
             </div>
-            <hr class="border-secondary" />
-            <div class="text-center small">© @DateTime.Now.Year WEBLINH Baby Shop.</div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-4">
+                    <a href="@Url.Action("Index", "Home", new { area = "User" })" class="brand footer-brand"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 52 52" role="img"><circle cx="25" cy="26" r="14" /><path d="M26 11c4-6 11-6 15-2-3 6-8 9-15 8z" /><path d="M14 30c4-5 9-7 15-7-1 6-5 11-11 13z" /></svg></span><span><strong class="brand-wordmark">TẮC <span>TẮC</span></strong><small>Chân gà nhà làm</small></span></a>
+                    <p class="footer-intro">Chân gà giòn sần sật, sốt trộn đậm vị và nguyên liệu tươi được chuẩn bị chỉn chu trong ngày.</p>
+                    <div class="social-links"><a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a><a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a><a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a></div>
+                </div>
+                <div class="col-6 col-lg-2"><h5>Khám phá</h5><a href="@Url.Action("DanhSach", "SanPham", new { area = "User" })">Toàn bộ menu</a><a href="@Url.Action("GioiThieu", "Home", new { area = "User" })">Chuyện TẮC TẮC</a><a href="@Url.Action("LienHe", "Home", new { area = "User" })">Liên hệ</a></div>
+                <div class="col-6 col-lg-2"><h5>Hỗ trợ</h5><a href="#">Cách bảo quản</a><a href="#">Chính sách giao hàng</a><a href="#">Thanh toán đơn hàng</a></div>
+                <div class="col-lg-4"><h5>Ghé TẮC TẮC</h5><p class="footer-contact"><i class="fa-solid fa-location-dot"></i>123 Nguyễn Trãi, Quận 5, TP.HCM</p><p class="footer-contact"><i class="fa-solid fa-phone"></i>0909 123 456</p><p class="footer-contact"><i class="fa-regular fa-envelope"></i>hello@tactac.vn</p></div>
+            </div>
+            <div class="footer-bottom"><span>© @DateTime.Now.Year TẮC TẮC. All rights reserved.</span><span>Trộn bằng nguyên liệu tươi · Gửi đi bằng sự tử tế.</span></div>
         </div>
     </footer>
 

@@ -1,0 +1,14 @@
+@model System.Collections.Generic.List<WEBLINH.Models.BaiViet>
+@{ ViewBag.Title = "Quản lý bài viết"; }
+<div class="d-flex justify-content-between align-items-center mb-4 gap-3"><p class="text-muted mb-0">Viết tin mới, giới thiệu món hoặc chia sẻ cách thưởng thức. Chỉ bài đã xuất bản mới hiển thị với khách.</p><a class="btn btn-warning text-nowrap" href="@Url.Action("Create")">+ Viết bài mới</a></div>
+<div class="card"><div class="table-responsive"><table class="table align-middle">
+<thead><tr><th>Ảnh bìa</th><th>Bài viết</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody>
+@foreach (var b in Model)
+{
+    <tr><td><img src="@Url.Content("~/Content/uploads/" + (string.IsNullOrEmpty(b.Anh) ? "no-image-food.png" : b.Anh))" alt="" width="90" height="65" /></td><td><strong>@b.TieuDe</strong><small class="d-block text-muted">Tạo @b.NgayTao.ToString("dd/MM/yyyy HH:mm")</small></td><td><span class="badge @(b.DaDang ? "bg-success" : "bg-secondary")">@(b.DaDang ? "Đã xuất bản" : "Bản nháp")</span></td><td><div class="d-flex flex-wrap gap-2"><a href="@Url.Action("Edit", new { id = b.Id })" class="btn btn-sm btn-outline-primary">Sửa</a>
+    @if (b.DaDang) { <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="@Url.Action("ChiTiet", "BaiViet", new { area = "User", id = b.Id })">Xem bài</a> }
+    @using (Html.BeginForm("Delete", "BaiViet", new { area = "Admin", id = b.Id }, FormMethod.Post, new { onsubmit = "return confirm('Xóa bài viết này?');" })) { @Html.AntiForgeryToken()<button class="btn btn-sm btn-outline-danger" type="submit">Xóa</button> }
+    </div></td></tr>
+}
+@if (Model.Count == 0) { <tr><td colspan="4" class="text-center py-5 text-muted">Chưa có bài viết. Chọn “Viết bài mới” để bắt đầu.</td></tr> }
+</tbody></table></div></div>
